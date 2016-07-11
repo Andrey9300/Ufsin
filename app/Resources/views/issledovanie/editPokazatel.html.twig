@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+    <div class="row">
+        <h1>Редактирование показателя</h1>
+    </div>
+
+    {{ form_start(form) }}
+
+    <div class="row">
+        <div class="col-md-12">
+            <input type="submit" value="Сохранить изменения" class="btn btn-success" style="float:right;"/>
+        </div>
+    </div>
+
+    <div class="row">
+        {{ form_label(form.pokazatel, 'Показатель') }}
+        {{ form_widget(form.pokazatel, { 'attr': {'class': 'form-control', 'readonly' : 'readonly'} }) }}
+        {{ form_label(form.description, 'Не соответствие') }}
+        {{ form_widget(form.description, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+
+    <div class="row">
+        <hr/>
+        <ul class="nav navbar-nav add">
+            <li><a href="/issledovanie/deletePokazatel/{{ pokazateslIssledovaniya.id }}" class="delete_entity">Удалить показатель</a></li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <input type="submit" value="Сохранить изменения" class="btn btn-success" style="float:right;"/>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

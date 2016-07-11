@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<div class="row">
+    <h1>Добавление очага заболеваний</h1>
+</div>
+
+{{ form_start(form) }}
+
+<div class="row">
+    <input type="submit" value="Добавить очаг заболеваний" class="btn btn-success" style="float:right;"/>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+	    {{ form_label(form.organization, 'Учреждение') }}
+        {{ form_widget(form.organization, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_label(form.name, 'Наименование') }}
+        {{ form_widget(form.name, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_label(form.date, 'Дата (дд.мм.гггг)') }}
+        {{ form_widget(form.date, { 'attr': {'class': 'form-control', 'data-validation' : 'date', 'data-validation-optional' : 'true', 'data-validation-format' : 'dd.mm.yyyy'} }) }} 
+        {{ form_label(form.place, 'Место') }}
+        {{ form_widget(form.place, { 'attr': {'class': 'form-control'} }) }}        
+    </div>
+</div>
+
+<hr/>
+
+<div class="dobavlenie row">
+    
+    <div class="col-md-6">
+        <div class="osugdenyi" data-prototype="{{ form_widget(form.osugdenyi.vars.prototype)|e }}"></div>
+    </div>    
+    <div class="col-md-6 list_add"></div>
+    
+</div>
+
+<hr/>
+
+<div class="dobavlenie row">
+    
+    <div class="col-md-6">
+        <div class="kontaktnyi" data-prototype="{{ form_widget(form.kontaktnyi.vars.prototype)|e }}"></div>
+    </div>    
+    <div class="col-md-6 list_add"></div>
+    
+</div>
+
+<div class="row">
+    <input type="submit" value="Добавить очаг заболеваний" class="btn btn-success" style="float:right;"/>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+    <div class="row">
+        <h1>Редакитрование лабораторного исследования</h1>
+    </div>
+    {{ form_start(form) }}
+
+    <div class="row">
+        <input type="submit" value="Сохранить изменения" class="btn btn-success" style="float:right; margin-bottom: 30px"/>
+    </div>
+
+    <div class="issledovanie row">
+        <div class="col-md-3">
+            {{ form_label(form.nomer, 'Номер протокола') }}
+            {{ form_widget(form.nomer, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="col-md-3">
+            {{ form_label(form.date, 'Дата протокола (дд.мм.гггг)') }}
+            {{ form_widget(form.date, { 'attr': {'class': 'form-control', 'data-validation' : 'date', 'data-validation-optional' : 'true', 'data-validation-format' : 'dd.mm.yyyy'} }) }}
+        </div>
+        <div class="col-md-3">
+            {{ form_label(form.all_count, 'Всего проб') }}
+            {{ form_widget(form.all_count, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="col-md-3">
+            {{ form_label(form.ne_sootv, 'Не соответствует') }}
+            {{ form_widget(form.ne_sootv, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-3">
+
+        </div>
+    </div>
+
+    <div class="row">
+        <hr/>
+        <ul class="nav navbar-nav add">
+            <li><a href="/fkuz/deleteIssledovanie/{{ issledovanieFkuz.id }}" class="delete_entity">Удалить лабораторное исследование</a></li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <input type="submit" value="Сохранить изменения" class="btn btn-success" style="float:right; margin-top:30px"/>
+    </div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

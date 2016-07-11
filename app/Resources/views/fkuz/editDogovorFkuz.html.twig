@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<h1>Изменить договор</h1>
+
+{{ form_start(form) }}
+
+<div class="row">
+    <div class="col-md-4">
+        {{ form_label(form.nomer, 'Номер') }}
+        {{ form_widget(form.nomer, { 'attr': {'class': 'form-control', 'spellcheck' : 'true'} }) }}
+        {{ form_label(form.date, 'Дата (дд.мм.гггг)') }}
+        {{ form_widget(form.date, { 'attr': {'class': 'form-control', 'data-validation' : 'date', 'data-validation-optional' : 'true', 'data-validation-format' : 'dd.mm.yyyy'} }) }}  
+        {{ form_label(form.organization_posrednik, 'Организация посредник') }}
+        {{ form_widget(form.organization_posrednik, { 'attr': {'class': 'form-control', 'spellcheck' : 'true'} }) }}
+        {{ form_label(form.summa, 'Сумма') }}
+        {{ form_widget(form.summa, { 'attr': {'class': 'form-control', 'spellcheck' : 'true'} }) }}
+        {{ form_label(form.dogovorType, 'Тип договора') }}
+        {{ form_widget(form.dogovorType, { 'attr': {'class': 'form-control', 'spellcheck' : 'true'} }) }}       
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <input type="submit" value="Сохранить изменения" class="btn btn-success add_button" />
+    </div>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

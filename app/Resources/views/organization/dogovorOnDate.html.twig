@@ -1,0 +1,9 @@
+{% for dogovor in dogovorOnDate %}
+<tr>
+    <td>{{ dogovor.name }}</td>
+    <td>{{ dogovor.date|date("d.m.Y") }}</td>
+    <td>{{ dogovor.nomer }}</td>
+    <td>{{ dogovor.organization_posrednik }}</td>
+    <td>{{ dogovor.summa }}</td>
+</tr>
+{% endfor %}

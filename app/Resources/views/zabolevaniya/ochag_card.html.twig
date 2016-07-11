@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Очаг</h3>
+        <table class="table table-hover">
+            <tbody>
+                <tr>
+                    <td>Учреждение</td>
+                    <td>{{ organization_name }}</td>
+                </tr>            
+                <tr>
+                    <td>Наименование</td>
+                    <td>{{ ochag.name }}</td>
+                </tr>
+                <tr>
+                    <td>Дата</td>
+                    <td>{{ ochag.date|date("d.m.Y") }}</td>
+                </tr>
+                <tr>
+                    <td>Место</td>
+                    <td>{{ ochag.place }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div> 
+    
+    <div class="col-md-6">
+        <div class="row"> 
+            {% if ochag_osugdenye is empty %}
+                <div>Заболевших нет</div>
+            {% else %}
+            <h3>Заболевшие</h3>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td>ФИО</td>
+                        <td>Дата рождения</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for osugdenye in ochag_osugdenye %}
+                    <tr>
+                        <td>{{ osugdenye.fio }}</td>
+                        <td>{{ osugdenye.dateBirthday|date("d.m.Y") }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div> 
+        
+        <div class="row"> 
+            {% if ochag_kontaktnye is empty %}
+                <div>Контактных нет</div>
+            {% else %}
+            <h3>Контактные</h3>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td>ФИО</td>
+                        <td>Дата рождения</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for kontaktnye in ochag_kontaktnye %}
+                    <tr>
+                        <td>{{ kontaktnye.fio }}</td>
+                        <td>{{ kontaktnye.dateBirthday|date("d.m.Y") }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div> 
+    </div> 
+</div> 
+
+<div class="row">            
+    <ul class="nav navbar-nav add">
+        <li><a href="/zabolevaniya/editOchag/{{ ochag.id }}">Редактировать очаг</a></li>
+        <li><a href="/zabolevaniya/deleteOchag/{{ ochag.id }}">Удалить очаг</a></li>
+   </ul>
+</div> 
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

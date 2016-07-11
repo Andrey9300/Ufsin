@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<div class="row">
+    <h1>Добавление лабораторного исследования для «{{ fkuzName }}»</h1>
+</div>
+{{ form_start(form) }}
+
+<div class="row">
+    <input type="submit" value="Добавить исследование" class="btn btn-success" style="float:right;"/>
+</div>
+
+<div class="issledovanie row">
+
+    {{ form_label(form.nomer, 'Номер протокола') }}
+    {{ form_widget(form.nomer, { 'attr': {'class': 'form-control'} }) }}
+    {{ form_label(form.date, 'Дата протокола (дд.мм.гггг)') }}
+    {{ form_widget(form.date, { 'attr': {'class': 'form-control', 'data-validation' : 'date', 'data-validation-optional' : 'true', 'data-validation-format' : 'dd.mm.yyyy'} }) }}
+
+</div>
+
+<hr/>
+
+<div class="dobavlenie row">
+
+    <div class="col-md-6">
+        <div class="lab_issledovanie" data-prototype="{{ form_widget(form.issledovanieObjectFkuz.vars.prototype)|e }}"></div>
+    </div>
+    <div class="col-md-6 list_add"></div>
+    
+</div>
+   
+<hr/>
+   
+<div class="row">
+    <input type="submit" value="Добавить исследование" class="btn btn-success" style="float:right;"/>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

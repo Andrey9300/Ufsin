@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+{% include 'views/otchet/ajax/issledovanie_menu.html' %}
+
+<div class="row">
+    <table class="table table-hover table-bordered" id="common_proverka">
+        <caption>{{ name_statistic }}</caption>
+        <thead>
+            <tr>
+                <td></td>
+                {% for organization in organizations %}
+                    <td>{{organization.nameShort}}</td>
+                {% endfor %}
+                <td>Итого</td>
+            </tr>
+        </thead>
+        <tbody>
+  
+        {% set flag = "0" %}
+
+        {% for pokazatel in issledovaniePokazatels %}
+            <tr class="pokazatels{{loop.index}}">
+                <td class="name">{{pokazatel.name}}</td>
+                
+                {% for organization in organizations %}
+                
+                    {% for quantity in pokazatelQuantity %}
+                    
+                        {% if quantity.name == pokazatel.name %}
+                        
+                            {% if quantity.name_full == organization.nameFull %}
+                                <td class="pokazatel{{loop.parent.loop.index}}">{{quantity[1]}}</td>
+                                {% set flag = "1" %}
+                            {% endif %}
+                            
+                        {% endif %}
+
+                    {% endfor %}
+                    
+                    {% if flag == "0" %}
+                        <td></td>
+                    {% endif %}
+                    {% set flag = "0" %}
+                {% endfor %}
+                <td></td>
+            </tr> 
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Всего</td>
+                {% for organization in organizations %}
+                    <td id="result{{loop.index}}"></td>
+                {% endfor %}
+                <td id="vsego"></td>
+            </tr>
+            <tr>
+                <td></td>
+                {% for organization in organizations %}
+                    <td>{{organization.nameShort}}</td>
+                {% endfor %}
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

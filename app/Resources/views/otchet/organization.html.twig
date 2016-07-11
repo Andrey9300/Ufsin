@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+    <div class="row">
+        <div id="main" class="col-sm-9">
+            <h1>Список учреждений</h1>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Юридический адрес</th>
+                        {% for organization in organizations %}
+                            {% for ruk in organization.rukovoditel %}
+                                <td>ФИО руководителя</td>
+                                {% for zam in ruk.rukovoditelZamestitel %}
+                                    <td>ФИО зам руководителя</td>
+                                {% endfor %}
+                            {% endfor %}
+                            
+                            {% for org in organization.organizationObject %}
+                                <td>Объекты учреждения</td>
+                            {% endfor %}
+                        {% endfor %}  
+                    </tr>
+                </thead>
+                <tbody>
+                {% for organization in organizations %}
+                    <tr>
+                        <td>{{ organization.name }}</td>
+                        <td>{{ organization.urAddress }}</td>
+                        
+                        {% for ruk in organization.rukovoditel %}
+                            <td>{{ruk.fio}}</td>
+                            {% for zam in ruk.rukovoditelZamestitel %}
+                                <td>{{zam.fio}}</td>
+                            {% endfor %}
+                        {% endfor %}
+                        
+                        {% for org in organization.organizationObject %}
+                            <td>{{org.name}}</td>
+                        {% endfor %}
+                            
+                    </tr>
+                {% else %}
+                
+                    <tr>
+                        <td colspan="4" align="center">Организаций не найдено</td>
+                   </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

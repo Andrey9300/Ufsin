@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+{% include 'views/otchet/ajax/proverka_menu.html' %}
+
+<div class="row">
+    <h3>Невыполненные нарушения</h3>
+
+    <div class="row" style="margin-bottom:50px">
+        <form class="has-validation-callback" method="post" action="{{ path('proverka_nevyp') }}">
+            <div class="col-md-3">
+                <label class="required" for="proverka_date">Дата от (дд.мм.гггг)</label>
+                <input type="text" data-validation-format="dd.mm.yyyy" data-validation-optional="true" data-validation="date" class="form-control" required="required" name="dateOt" id="proverka_date" value="{{ dateOt }}">
+            </div><div class="col-md-3">
+                <label class="required" for="proverka_date">Дата до (дд.мм.гггг)</label>
+                <input type="text" data-validation-format="dd.mm.yyyy" data-validation-optional="true" data-validation="date" class="form-control" required="required" name="dateDo" id="proverka_date" value="{{ dateDo }}">
+            </div>
+            <div class="col-md-3" style="margin-top:25px">
+                <input type="submit" class="btn btn-success" value="Выбрать">
+            </div>
+        </form>
+    </div>
+
+    {% if proverkaNevypAll is empty%}
+        <p>Нет нарушений в учреждениях в выбранный период</p>
+    {% else %}
+
+        <table class="table table-hover main narusheniyaOrganization">
+            <thead>
+                <tr>
+                    <td>УК</td>
+                    <td>Объект</td>
+                    <td>Описание</td>
+                    <td>Дата устранения</td>
+                    <td>Затраты</td>
+                    <td>Отметка устранения</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for proverka in proverkaNevypAll %}
+                    <tr>
+                        <td>{{ proverka.name_short }}</td>
+                        <td>{{ proverka.name }}</td>
+                        <td>{{ proverka.description }}</td>
+                        <td>{{ proverka.date_ustraneniya|date("d.m.Y") }}</td>
+                        <td>{% if proverka.zatraty == "1" %}
+                            Требует больших затрат
+                            {% elseif proverka.zatraty == "0" %}
+                            Требует затрат
+                            {% elseif proverka.zatraty == "-1" %}
+                            Не требует затрат
+                            {% endif %}
+                        </td>
+                        <td>
+                            <select class="form-control otmetka">
+                                {% if proverka.otmetka_ustraneniya == "0" %}
+                                    <option id="{{ proverka.id }}" otmetka="0">Нет</option>
+                                    <option id="{{ proverka.id }}" otmetka="1">Да</option>
+                                    <option id="{{ proverka.id }}" otmetka="-1">Частично</option>
+                                    <option id="{{ proverka.id }}" otmetka="2">Устранено в ходе проверки</option>
+                                {% elseif proverka.otmetka_ustraneniya == "-1" %}
+                                    <option id="{{ proverka.id }}" otmetka="-1">Частично</option>
+                                    <option id="{{ proverka.id }}" otmetka="0">Нет</option>
+                                    <option id="{{ proverka.id }}" otmetka="1">Да</option>
+                                    <option id="{{ proverka.id }}" otmetka="2">Устранено в ходе проверки</option>
+                                {% elseif proverka.otmetka_ustraneniya == "1" %}
+                                    <option id="{{ proverka.id }}" otmetka="1">Да</option>
+                                    <option id="{{ proverka.id }}" otmetka="-1">Частично</option>
+                                    <option id="{{ proverka.id }}" otmetka="0">Нет</option>
+                                    <option id="{{ proverka.id }}" otmetka="2">Устранено в ходе проверки</option>
+                                {% elseif proverka.otmetka_ustraneniya == "2" %}
+                                    <option id="{{ proverka.id }}" otmetka="2">Устранено в ходе проверки</option>
+                                    <option id="{{ proverka.id }}" otmetka="1">Да</option>
+                                    <option id="{{ proverka.id }}" otmetka="-1">Частично</option>
+                                    <option id="{{ proverka.id }}" otmetka="0">Нет</option>
+                                {% endif %}
+                            </select>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+        
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

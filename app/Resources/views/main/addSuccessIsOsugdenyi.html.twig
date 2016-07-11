@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<div class="row">
+    <h1>Добавление прошло успешно</h1>
+
+    {% if is_kontakt is empty  %}
+
+    {% else %}
+        <p style="color:red">Добавленный осужденный был контактным с:</p>
+        <ul>
+        {% for kontakt in is_kontakt %}
+            <li><a href="/otchetZabolevaniya/{{kontakt.id}}">{{ kontakt.fio }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    
+    {% if is_ochag is empty  %}
+
+    {% else %}
+        <p style="color:red">Добавленный осужденный был в очаге:</p>
+        <ul>
+        {% for ochag in is_ochag %}
+            <li>{{ochag.name}}, {{ ochag.date|date("d.m.Y") }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    
+    {% for kontakt in kontakts %}
+    
+        {% if kontakt is empty  %}
+
+        {% else %}
+        <p style="color:red">Добавленный контактный контактный с:</p>
+        <ul>   
+            {% for k in kontakt %}
+                 <li>{{ k.fio }}, {{ k.date_birthday|date("d.m.Y") }} контактный с <a href="/otchetZabolevaniya/{{k.id}}">{{ k.fio }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        
+    {% endfor %}
+
+    {% for ochag in in_ochag %}
+    
+        {% if ochag is empty  %}
+
+        {% else %}
+        <p style="color:red">Добавленный контактный был в очаге:</p>
+        <ul>   
+            {% for och in ochag %}
+                 <li>{{ och.fio }}, {{ och.date_birthday|date("d.m.Y") }}, очаг: {{ och.name }}, {{ och.date|date("d.m.Y") }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+    {% endfor %}
+        
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

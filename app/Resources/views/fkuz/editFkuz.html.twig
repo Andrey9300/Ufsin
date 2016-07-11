@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+{{ form_start(form) }}
+
+<div class="row">
+    <input type="submit" value="Сохранить изменения" class="btn btn-success" style="float:right;"/>
+</div>
+
+<div class="row">
+    {{ form_label(form.name_full, 'Полное название') }}
+    {{ form_widget(form.name_full, { 'attr': {'class': 'form-control'} }) }}
+    {{ form_label(form.name_short, 'Краткое название') }}
+    {{ form_widget(form.name_short, { 'attr': {'class': 'form-control'} }) }}    
+    {{ form_label(form.address, 'Адрес') }}
+    {{ form_widget(form.address, { 'attr': {'class': 'form-control', 'spellcheck' : 'true'} }) }}
+    {{ form_label(form.rukovoditel.fio, 'ФИО руководителя') }}
+    {{ form_widget(form.rukovoditel.fio, { 'attr': {'class': 'form-control'} }) }}
+    {{ form_label(form.rukovoditel.zvanie, 'Звание руководителя') }}
+    {{ form_widget(form.rukovoditel.zvanie, { 'attr': {'class': 'form-control'} }) }}
+</div>
+
+<div class="row">
+    <input type="submit" value="Сохранить изменения" class="btn btn-success" style="float:right;"/>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

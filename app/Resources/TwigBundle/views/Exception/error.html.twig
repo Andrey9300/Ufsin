@@ -1,0 +1,29 @@
+{#
+    This template is used to render errors of type HTTP 500 (Internal Server Error)
+
+    This is the simplest way to customize error pages in Symfony applications.
+    In case you need it, you can also hook into the internal exception handling
+    made by Symfony. This allows you to perform advanced tasks and even recover
+    your application from some errors.
+    See http://symfony.com/doc/current/cookbook/controller/error_pages.html
+#}
+
+{% extends 'base.html.twig' %}
+
+{% block body_id 'error' %}
+
+{% block main %}
+    <h1 class="text-danger">Произошла ошибка</h1>
+
+    <p class="lead">
+        Скорее всего вы не верно ввели данные или произошла техническая ошибка.
+    </p>
+    
+    <p>
+        Пожалуйста, проверьте вводимые данные <a href="#" id="back_page">на предыдущей странице</a> и/или повторите снова.
+    </p>
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

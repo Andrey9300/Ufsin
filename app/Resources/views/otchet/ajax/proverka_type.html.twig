@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+{% include 'views/otchet/ajax/proverka_menu.html' %}
+
+<div class="row">
+    <h3>Статистика по проверкам</h3>
+
+    <div class="row" style="margin-bottom:50px">
+        <form class="has-validation-callback" method="post" action="{{ path('common_proverka') }}" >
+            <div class="col-md-3">
+                <label class="required" for="proverka_date">Дата от (дд.мм.гггг)</label>
+                <input type="text" data-validation-format="dd.mm.yyyy" data-validation-optional="true" data-validation="date" class="form-control" required="required" name="dateOt" id="proverka_date" value="{{ dateOt }}">
+            </div><div class="col-md-3">
+                <label class="required" for="proverka_date">Дата до (дд.мм.гггг)</label>
+                <input type="text" data-validation-format="dd.mm.yyyy" data-validation-optional="true" data-validation="date" class="form-control" required="required" name="dateDo" id="proverka_date" value="{{ dateDo }}">
+            </div>
+            <div class="col-md-3" style="margin-top:25px">
+                <input type="submit" class="btn btn-success" value="Выбрать">
+            </div>
+        </form>
+    </div>
+
+    {% if organizations is empty%}
+        <p>Не добавлены учреждения</p>
+    {% elseif proverkaType is empty%}
+        <p>Не добавлены проверки</p>
+    {% elseif onTypeAndOrganizationQuantity is empty%}
+        <p>Нет проверок в учреждениях в выбранный период</p>
+    {% else %}
+
+        <table class="table table-hover table-bordered numbers">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td colspan="4">Плановые</td>
+                    <td colspan="3">Внеплановые</td>
+                    <td colspan="2" id="itog_double">Итог</td>
+                </tr>
+                <tr>
+                    <td>Учреждение</td>
+                    {% for type in proverkaType %}
+                        <td>{{type.name}}</td>
+                    {% endfor %}
+                    <td>Плановые</td>
+                    <td>Внеплановые</td>
+                </tr>
+            </thead>
+            <tbody>
+
+            {% set flag = "0" %}
+
+            {% for organization in organizations %}
+                <tr class="pokazatels{{loop.index}}">
+                    <td class="name">{{organization.nameShort}}</td>
+
+                    {% for type in proverkaType %}
+
+                        {% for quantity in onTypeAndOrganizationQuantity %}
+
+                            {% if quantity.name_full == organization.nameFull %}
+
+                                {% if quantity.name == type.name %}
+
+                                    {% if quantity.planovost == "1" %}
+                                    <td class="pokazatel{{loop.parent.loop.index}} plan">{{quantity[1]}}</td>
+                                    {% else %}
+                                    <td class="pokazatel{{loop.parent.loop.index}} vneplan">{{quantity[1]}}</td>
+                                    {% endif %}
+
+                                    {% set flag = "1" %}
+
+                                {% endif %}
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                        {% if flag == "0" %}
+                            <td></td>
+                        {% endif %}
+                        {% set flag = "0" %}
+
+                    {% endfor %}
+
+                    <td></td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td rowspan="3" style="text-align:center; padding-top:40px">Всего</td>
+                    <td id="result1"></td>
+                    <td id="result2"></td>
+                    <td id="result3"></td>
+                    <td id="result4"></td>
+                    <td id="result5"></td>
+                    <td id="result6"></td>
+                    <td id="result7"></td>
+                    <td style="text-align:center;padding-top:40px" colspan="2" rowspan="3" id="vsego"></td>
+                </tr>
+                <tr>
+                    <td colspan="4">Плановые</td>
+                    <td colspan="3">Внеплановые</td>
+                </tr>
+                <tr>
+                    <td colspan="4" id="result8"></td>
+                    <td colspan="3" id="result9"></td>
+                </tr>
+            </tfoot>
+        </table>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

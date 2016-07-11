@@ -1,0 +1,9 @@
+<ul class="dropdown-menu">
+    {% if filialNames is empty %}
+        <li><a href="#">Филиалы не добавлены</a></li>
+    {% else %}
+        {% for filial in filialNames %}
+            <li><a href="{{ path('fkuz', {'id': filial.id}) }}">{{filial.nameShort}}</a></li>
+        {% endfor %}
+    {% endif %}
+</ul>

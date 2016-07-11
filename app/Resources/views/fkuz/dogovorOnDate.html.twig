@@ -1,0 +1,11 @@
+{% for dogovor in dogovorOnDate %}
+	<tr>
+		<td>{{ dogovor.dogovorType.name }}</td>
+		<td>{{ dogovor.nomer }}</td>
+		<td>{{ dogovor.date|date("d.m.Y") }}</td>
+		<td>{{ dogovor.organizationPosrednik }}</td>
+		<td>{{ dogovor.summa }}</td>
+        <td><span class="glyphicon glyphicon-pencil edit_in_fkuz" aria-hidden="true" id_now="/fkuz/editDogovor/{{ dogovor.id }}"></span></td>
+		<td><span class="glyphicon glyphicon-remove delete_now" aria-hidden="true" id_now="/fkuz/deleteDogobor/{{ dogovor.id }}"></span></td>        
+	</tr>
+{% endfor %}

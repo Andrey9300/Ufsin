@@ -1,0 +1,27 @@
+{% set flag = "0" %}  
+{% set usloviya = ["1", "0", "-1"] %}  
+
+{% for proverkaId in proverkaIds %}
+    <tr class="pokazatels{{loop.index}}">
+        <td>{{ proverkaId.date|date("d.m.Y") }}</td>
+        {% for uslovie in usloviya %}
+            {% for proverka in proverkaAll %}
+            
+                {% if proverka.id == proverkaId.id %}
+                    {% if proverka.otmetka_ustraneniya == uslovie  %}
+                        <td class="pokazatel{{loop.parent.loop.index}}">{{proverka.1}}</td>
+                        {% set flag = "1" %}
+                    {% endif %}                    
+                {% endif %}
+                
+            {% endfor %}  
+            
+            {% if flag == "0" %}
+                <td></td>
+            {% endif %}
+            
+            {% set flag = "0" %}
+        {% endfor %} 
+        <td></td>                            
+    </tr> 
+{% endfor %}

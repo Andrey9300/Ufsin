@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<div class="row">
+    <h1>Работа с данными прошла успешно</h1>
+    <p><a href="#" id="back_page">Работать еще</a></p>
+
+    {% if is_ill is defined %}
+        {% if is_ill is empty %}
+        {% else %}
+            <p style="color:red">Добавленный заболевший осужденный был ранее заболевшим:</p>
+            <ul>
+            {% for ill in is_ill %}
+                <li>Дата предыдущего выявления: {{ ill.date_viyavleniya|date("d.m.Y") }}. <a href="/zabolevaniya/osugdenyi/{{ill.id}}" target="_blank">Карточка</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
+    
+    {% if is_kontakt is defined %}
+        {% if is_kontakt is empty %}
+        {% else %}
+            <p style="color:red">Добавленный осужденный был контактным с:</p>
+            <ul>
+            {% for kontakt in is_kontakt %}
+                <li>{{ kontakt.fio }}, {{ kontakt.date_birthday|date("d.m.Y") }}, {{ kontakt.place_progivaniya }}, {{ kontakt.date_viyavleniya|date("d.m.Y") }}. <a href="/zabolevaniya/osugdenyi/{{kontakt.id}}" target="_blank">Карточка</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
+    
+    {% if is_ochag is defined %}
+        {% if is_ochag is empty  %}
+
+        {% else %}
+            <p style="color:red">Добавленный осужденный был в очаге:</p>
+            <ul>
+            {% for ochag in is_ochag %}
+                <li>{{ochag.name}}, {{ochag.place}}, {{ ochag.date|date("d.m.Y") }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
+    
+    {% if kontakts is defined %}
+        {% for kontakt in kontakts %}
+        
+            {% if kontakt is empty  %}
+
+            {% else %}
+            <p style="color:red">Добавленный контактный контактный с:</p>
+            <ul>   
+                {% for k in kontakt %}
+                     <li>{{ k.kfio }}, {{ k.kdate_birthday|date("d.m.Y") }} контактный с {{ k.fio }}, {{ k.date_birthday|date("d.m.Y") }}, {{ k.place_progivaniya }}, {{ k.date_viyavleniya|date("d.m.Y") }}. <a href="/zabolevaniya/osugdenyi/{{k.id}}" target="_blank">Карточка</a></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            
+        {% endfor %}
+    {% endif %}
+
+    {% if in_ochag is defined %}
+        {% for ochag in in_ochag %}
+        
+            {% if ochag is empty  %}
+
+            {% else %}
+            <p style="color:red">Добавленный контактный был в очаге:</p>
+            <ul>   
+                {% for och in ochag %}
+                     <li>{{ och.fio }}, {{ och.date_birthday|date("d.m.Y") }}, очаг: {{ och.name }}, {{och.place}}, {{ och.date|date("d.m.Y") }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+        {% endfor %}
+    {% endif %}
+    
+</div>
+    
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

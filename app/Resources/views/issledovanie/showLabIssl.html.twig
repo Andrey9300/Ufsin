@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<div class="row">
+
+    <div class="col-md-3">
+        <div>Выберите исследование</div>
+        <select class="form-control" id="labIssledovaniya">
+            {% for issl in labIssl %}
+            <option value="{{ issl.id }}">{{ issl.nomer }}, {{issl.date|date("d.m.Y") }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    
+    <div class="col-md-3"> 
+        <div>Выберите результат</div>
+        <div id="issledovanie"></div>
+    </div>
+</div>
+   
+<div class="row">  
+    <div class="col-md-3">
+        <input type="submit" value="Редактировать исследование" class="btn btn-success" id="showIssledovaniya" style="margin-top:30px"/>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

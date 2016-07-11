@@ -1,0 +1,13 @@
+<tr>
+    {% for count in lichnyiSostavCount %}
+        <td>Личный состав</td>
+        <td>{{ count.1 }}</td>
+    {% endfor %}
+    </tr>
+
+    <tr>
+    {% for count in osugdenyiCount %}
+        <td>Осужденные</td>
+        <td>{{ count.1 }}</td>
+    {% endfor %}
+</tr>       

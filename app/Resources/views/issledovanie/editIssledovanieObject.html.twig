@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<div class="row">
+    <h1>Редактирование исследования «{{ issledovanieObject.object.name }}»</h1>
+</div>
+
+{{ form_start(form) }}
+
+<div class="row">
+    <div class="col-md-12">
+        <input type="submit" value="Сохранить изменения" class="btn btn-success" style="float:right;"/>
+    </div>
+</div>
+
+<div class="row">
+
+    {{ form_label(form.object, 'Объект') }}
+    {{ form_widget(form.object, { 'attr': {'class': 'form-control'} }) }}  
+    {{ form_label(form.result, 'Результат') }}
+    {{ form_widget(form.result, { 'attr': {'class': 'form-control'} }) }}  
+    {{ form_label(form.place, 'Место') }}
+    {{ form_widget(form.place, { 'attr': {'class': 'form-control'} }) }}  
+    {{ form_label(form.issledovanieType, 'Тип исследования') }}
+    {{ form_widget(form.issledovanieType, { 'attr': {'class': 'form-control'} }) }}  
+    {{ form_label(form.issledovaniePokazatel, 'Показатель исследования') }}
+    {{ form_widget(form.issledovaniePokazatel, { 'attr': {'class': 'form-control'} }) }}    
+    {{ form_label(form.proba, 'Проба') }}
+    {{ form_widget(form.proba, { 'attr': {'class': 'form-control'} }) }}      
+    {{ form_label(form.normativ_znak, 'Если больше "+" (меньше "-")') }}
+    {{ form_widget(form.normativ_znak, { 'attr': {'class': 'form-control'} }) }}      
+    {{ form_label(form.normativ, 'Начало диапазона (от), или +/- (присутствует/отсутствует), или число') }}
+    {{ form_widget(form.normativ, { 'attr': {'class': 'form-control'} }) }}      
+    {{ form_label(form.normativ_dob, 'Норматив до') }}
+    {{ form_widget(form.normativ_dob, { 'attr': {'class': 'form-control'} }) }}      
+
+</div> 
+
+<div class="row">
+    <div class="col-md-12">
+        <input type="submit" value="Сохранить изменения" class="btn btn-success" style="float:right;"/>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

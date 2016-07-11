@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+    <div class="row">
+        <h1>Редактирование наказания от «{{ proverkaNakazanieFkuz.nomer }}, {{ proverkaNakazanieFkuz.date|date("d.m.Y") }}»</h1>
+    </div>
+
+    {{ form_start(form) }}
+
+    <div class="row">
+        <div class="col-md-12">
+            <input type="submit" value="Сохранить изменения" class="btn btn-success" style="float:right;"/>
+        </div>
+    </div>
+
+    <div class="row">
+
+        {{ form_label(form.nomer, 'Номер') }}
+        {{ form_widget(form.nomer, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_label(form.date, 'Дата (дд.мм.гггг)') }}
+        {{ form_widget(form.date, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_label(form.fio, 'ФИО') }}
+        {{ form_widget(form.fio, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_label(form.dolgnost, 'Должность') }}
+        {{ form_widget(form.dolgnost, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_label(form.zvanie, 'Звание') }}
+        {{ form_widget(form.zvanie, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_label(form.podchinennost, 'Подчиненность') }}
+        {{ form_widget(form.podchinennost, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_label(form.type, 'Тип наказания') }}
+        {{ form_widget(form.type, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_label(form.vid, 'Вид наказания') }}
+        {{ form_widget(form.vid, { 'attr': {'class': 'form-control'} }) }}
+
+    </div>
+
+    <div class="row">
+        <hr/>
+        <ul class="nav navbar-nav add">
+            <li><a href="/fkuz/deleteNakazanieFkuz/{{ proverkaNakazanieFkuz.id }}" class="delete_entity">Удалить наказание</a></li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <input type="submit" value="Сохранить изменения" class="btn btn-success" style="float:right;"/>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

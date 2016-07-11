@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<div class="row">
+    <h1>Выберите исследование:</h1>
+</div>
+
+<div class="row">
+    <select class="form-control">
+        {% for lab in labConFkuz %}
+        <option value="{{ lab.id }}">{{ lab.nomer }}, {{lab.date|date("d.m.Y") }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<div class="row">
+    <input type="submit" value="Редактировать исследование" class="btn btn-success" id="showIssledovanieFkuz" style="margin-top:10px"/>
+</div>    
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

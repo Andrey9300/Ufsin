@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'error' %}
+
+{% block main %}
+    <h1 class="text-danger">Страница не найдена</h1>
+
+    <p class="lead">
+        Пожалуйста, вернитесь <a href="#" id="back_page">на предыдущую страницу</a> или перейдите <a href="{{ path('main_index') }}">на главную страницу</a>.
+    </p>
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

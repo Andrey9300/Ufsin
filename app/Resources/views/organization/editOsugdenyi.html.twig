@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<div class="row">
+    <h1>Редактирование карточки осужденного « {{ osugdenyi.fio }} »</h1>
+</div>
+
+{{ form_start(form) }}
+
+<div class="row">
+    <div class="col-md-12">
+        <input type="submit" value="Сохранить изменения" class="btn btn-success" style="float:right;"/>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        {{ form_label(form.gender, 'Пол') }}
+        {{ form_widget(form.gender, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_label(form.fio, 'ФИО') }}
+        {{ form_widget(form.fio, { 'attr': {'class': 'form-control'} }) }}      
+        {{ form_label(form.date_birthday, 'Дата рождения (дд.мм.гггг)') }}
+        {{ form_widget(form.date_birthday, { 'attr': {'class': 'form-control', 'data-validation' : 'date', 'data-validation-optional' : 'true', 'data-validation-format' : 'dd.mm.yyyy'} }) }}        
+        {{ form_label(form.place_job, 'Место работы') }}
+        {{ form_widget(form.place_job, { 'attr': {'class': 'form-control', 'spellcheck': 'true'} }) }}
+        {{ form_label(form.place_study, 'Место учебы') }}
+        {{ form_widget(form.place_study, { 'attr': {'class': 'form-control', 'spellcheck': 'true'} }) }}
+        {{ form_label(form.place_progivaniya, 'Место проживания') }}
+        {{ form_widget(form.place_progivaniya, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_label(form.date_viyavleniya, 'Дата заболевания (дд.мм.гггг)') }}
+        {{ form_widget(form.date_viyavleniya, { 'attr': {'class': 'form-control', 'data-validation' : 'date', 'data-validation-optional' : 'true', 'data-validation-format' : 'dd.mm.yyyy'} }) }}
+        {{ form_label(form.date_gospit, 'Дата госпитализации в МЧ (дд.мм.гггг)') }}
+        {{ form_widget(form.date_gospit, { 'attr': {'class': 'form-control', 'data-validation' : 'date', 'data-validation-optional' : 'true', 'data-validation-format' : 'dd.mm.yyyy'} }) }} 
+
+        
+        {{ form_label(form.date_vzyatiya_na_uchet, 'Дата взятия на учет ЛИУ-9 (дд.мм.гггг)') }}
+        {{ form_widget(form.date_vzyatiya_na_uchet, { 'attr': {'class': 'form-control', 'data-validation' : 'date', 'data-validation-optional' : 'true', 'data-validation-format' : 'dd.mm.yyyy'} }) }}
+        {{ form_label(form.date_perevoda, 'Дата перевода в ЛИУ-9 (дд.мм.гггг)') }}
+        {{ form_widget(form.date_perevoda, { 'attr': {'class': 'form-control', 'data-validation' : 'date', 'data-validation-optional' : 'true', 'data-validation-format' : 'dd.mm.yyyy'} }) }} 
+
+
+        {{ form_label(form.mbt, 'МБТ') }}
+        {{ form_widget(form.mbt, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_label(form.date_zakl_dezin, 'Дата заключительной дезинфекции (дд.мм.гггг)') }}
+        {{ form_widget(form.date_zakl_dezin, { 'attr': {'class': 'form-control', 'data-validation' : 'date', 'data-validation-optional' : 'true', 'data-validation-format' : 'dd.mm.yyyy'} }) }} 
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <input type="submit" value="Сохранить изменения" class="btn btn-success" style="float:right;"/>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

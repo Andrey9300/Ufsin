@@ -1,0 +1,76 @@
+.proverka .dates, .planovye, .vneplanovye, .ufsin{
+    display:none;
+}
+.nav.navbar-nav.add{
+    font-size:16px;
+}
+.dobavlenie div button.btn-primary{
+    margin-bottom: 15px;
+}
+.help-block.form-error{
+    display:none;
+}
+select.form-control{
+    width:auto;
+}
+input.add_button{
+    margin-top:25px;
+}
+caption{
+    color:#2c3e50;
+}
+table{
+    width: auto !important;
+    margin: 0 auto !important;
+}
+table.main{
+    width: 100% !important;
+}
+table.numbers{
+	text-align: center;
+}
+table thead td{
+    font-weight: bold;
+}
+.withDates{
+    display: inline;
+    float: left;
+    margin-top: 12px;
+}
+h4.withDates{
+    margin-top: 18px;
+}
+@font-face {
+    font-family: 'Glyphicons Halflings';
+    src: url('../fonts/glyphicons-halflings-regular.eot');
+    src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.glyphicon-pencil:before {
+    cursor: pointer;
+    content: "\270f";
+}
+.glyphicon-remove:before {
+    cursor: pointer;
+    content: "\e014";
+}
+div.pokazatelsIssledovaniya > div {
+    float:left;
+    margin-left: 30px;
+}
+.info a{
+    border-color: #ccc !important;
+    background-color: #fff !important;
+    color: #18bc9c !important;
+    font-size: 12px;
+}

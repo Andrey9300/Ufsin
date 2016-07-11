@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<div class="row">
+    <h3>Договора в учреждениях</h3>
+
+    <div class="row" style="margin-bottom:50px">
+        <form class="has-validation-callback" method="post" action="/otchetDogovor/common" >
+            <div class="col-md-3">
+                <label class="required" for="proverka_date">Дата от (дд.мм.гггг)</label>
+                <input type="text" data-validation-format="dd.mm.yyyy" data-validation-optional="true" data-validation="date" class="form-control" required="required" name="dateOt" id="proverka_date" value="{{ dateOt }}">
+            </div><div class="col-md-3">
+                <label class="required" for="proverka_date">Дата до (дд.мм.гггг)</label>
+                <input type="text" data-validation-format="dd.mm.yyyy" data-validation-optional="true" data-validation="date" class="form-control" required="required" name="dateDo" id="proverka_date" value="{{ dateDo }}">
+            </div>
+            <div class="col-md-3" style="margin-top:25px">
+                <input type="submit" class="btn btn-success" value="Выбрать">
+            </div>
+        </form>
+    </div>
+
+    {% if organizations is empty%}
+        <p>Не добавлены учреждения</p>
+    {% elseif dogovorsType is empty%}
+        <p>Не добавлены типы договоров</p>
+    {% elseif dogovors is empty%}
+        <p>Нет договоров в выбранный период</p>
+    {% else %}
+
+        <table class="table table-hover table-bordered" id="common_dogovor" style="position:absolute; left:5px; font-size:14px;">
+            <thead>
+                <tr>
+                    <td>Учреждение</td>
+                    {% for type in dogovorsType %}
+                        {% if type.name != "производственный контроль" %}
+                        <td>{{ type.name }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+
+            {% set flag = "0" %}
+
+                {% for organization in organizations %}
+                    <tr>
+                        <td class="name">{{organization.nameShort}}</td>
+
+                        {% for type in dogovorsType %}
+
+                            {% if type.name != "производственный контроль" %}
+
+                                {% for dogovor in dogovors %}
+
+                                    {% if dogovor.name_full == organization.nameFull %}
+
+                                        {% if dogovor.name == type.name %}
+
+                                            <td>+</td>
+
+                                            {% set flag = "1" %}
+
+                                        {% endif %}
+
+                                    {% endif %}
+
+                                {% endfor %}
+
+                                {% if flag == "0" %}
+                                    <td></td>
+                                {% endif %}
+
+                                {% set flag = "0" %}
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            <tfoot>
+            </tfoot>
+        </table>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

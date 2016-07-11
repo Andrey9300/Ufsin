@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<div class="row">
+    <h1>Редактировать учреждение «{{ organization.nameShort }}»</h1>
+</div>
+
+{{ form_start(form) }}
+
+<div class="row">
+    <input type="submit" value="Сохранить изменения" class="btn btn-success" style="float:right;"/>
+</div>
+
+<div class="row">
+    {{ form_label(form.name_full, 'Полное название') }}
+    {{ form_widget(form.name_full, { 'attr': {'class': 'form-control'} }) }}
+    {{ form_label(form.name_short, 'Краткое название') }}
+    {{ form_widget(form.name_short, { 'attr': {'class': 'form-control'} }) }}    
+    {{ form_label(form.ur_address, 'Юридический адрес') }}
+    {{ form_widget(form.ur_address, { 'attr': {'class': 'form-control', 'spellcheck' : 'true'} }) }}
+    {{ form_label(form.rukovoditel.fio, 'ФИО руководителя') }}
+    {{ form_widget(form.rukovoditel.fio, { 'attr': {'class': 'form-control'} }) }}
+    {{ form_label(form.rukovoditel.zvanie, 'Звание руководителя') }}
+    {{ form_widget(form.rukovoditel.zvanie, { 'attr': {'class': 'form-control'} }) }}    
+</div>
+
+<hr/>
+
+<div class="dobavlenie row">
+
+    <div class="col-md-4">
+        <div class="zamestiteli" data-prototype="{{ form_widget(form.rukovoditel.rukovoditel_zamestitel.vars.prototype)|e }}"></div>
+    </div>
+    <div class="col-md-4 list_add"></div>
+    <div class="col-md-4 list_now">
+        {% for rukovoditel_zamestitel in organization_rukovoditel_zamestitel %}
+            <div>Добавленные <strong>{{ rukovoditel_zamestitel.fio }}</strong>, {{ rukovoditel_zamestitel.zvanie }}<button style="float:none" id="/organization/deleteRukZam/{{ rukovoditel_zamestitel.id }}" class="close delete_after_save" type="button"><span aria-hidden="true">×</span></button></div>
+        {% endfor %}
+    </div>    
+</div>
+
+<hr/>
+
+<div class="row">
+    {{ form_label(form.organizationMCH, 'Филиал ФКУЗ МСЧ-76 ФСИН России') }}
+    {{ form_widget(form.organizationMCH, { 'attr': {'class': 'form-control'} }) }}
+</div>
+
+<div class="row">
+    <h4>Объекты</h4>
+    <div class="col-md-6">
+    
+        {% for obj in form.objects %}
+            {% if obj.vars.value < (form.objects|length)/2 %}
+                <div>
+                    {{ form_errors(obj) }}
+                    {{ form_widget(obj) }}
+                    {{ form_label(obj) }}
+                </div>
+            {% endif %}
+        {% endfor %}
+        
+    </div>
+    <div class="col-md-6">
+        
+        {% for obj in form.objects %}
+            {% if obj.vars.value >= (form.objects|length)/2 %}
+                <div>
+                    {{ form_errors(obj) }}
+                    {{ form_widget(obj) }}
+                    {{ form_label(obj) }}
+                </div>
+            {% endif %}
+        {% endfor %}
+        
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-md-6 list_now">
+        {% for object in organization.getObjects %}
+            {% if loop.index < (organization.getObjects|length)/2 %}
+                <div>Добавленные <strong>{{ object.name }}</strong><button style="float:none" id="/organization/deleteObjectOrganization/{{ organization.id }}/{{ object.id }}" class="close delete_after_save" type="button"><span aria-hidden="true">×</span></button></div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    
+    <div class="col-md-6 list_now">
+        {% for object in organization.getObjects %}
+            {% if loop.index >= (organization.getObjects|length)/2 %}
+                <div>Добавленные <strong>{{ object.name }}</strong><button style="float:none" id="/organization/deleteObjectOrganization/{{ organization.id }}/{{ object.id }}" class="close delete_after_save" type="button"><span aria-hidden="true">×</span></button></div>
+            {% endif %}
+        {% endfor %}
+    </div>    
+</div>
+
+<div class="row">
+    <input type="submit" value="Сохранить изменения" class="btn btn-success" style="float:right;"/>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Application{% endblock %}</title>
+
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+
+    <body id="{% block body_id %}{% endblock %}">
+
+        {% block header %}
+            <header>
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav">
+                                {% if app.user %}              
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Учреждения<span class="caret"></span></a>
+
+                                     {{ render(controller('AppBundle:Organization:allOrganizations')) }}
+
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Заболеваемость TBS<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{{ path('show_lichnyi_sostavs') }}">Личный состав</a></li>
+                                        <li><a href="{{ path('show_osugdenyis') }}">Осужденные</a></li>
+                                        <li><a href="{{ path('show_ochags') }}">Очаг</a></li>
+                                    </ul>
+                                </li> 
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ФКУЗ<span class="caret"></span></a>
+                                     
+                                     {{ render(controller('AppBundle:Fkuz:allNameFilial')) }}
+                                     
+                                </li>
+                                <li>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Отчеты<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{{ path('common_dogovor') }}">По договорам</a></li>
+                                        <li><a href="{{ path('otchet_proverka') }}">По проверкам</a></li>
+                                        <li><a href="{{ path('issledovanie') }}">По исследованиям</a></li>
+                                        <li><a href="{{ path('zabolevaniya') }}">По заболевшим</a></li>
+                                        <li><a href="{{ path('otchetFkuz') }}">По ФКУЗ/Филиалу</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Добавить<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{{ path('organization_new') }}">Учреждение</a></li>
+                                        <li><a href="{{ path('create_fkuz') }}">ФКУЗ / Филиал</a></li>
+                                        <li><a href="{{ path('create_type') }}">Тип исследования</a></li>
+                                        <li><a href="{{ path('create_dogovor_type') }}">Тип договора</a></li>                       
+                                        <li><a href="{{ path('create_object') }}">Объект</a></li>
+                                        
+                                    </ul>
+                                </li>                                
+                                {% endif %}                                
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                
+                                {% if app.user %}
+                                    <li>
+                                        <a href="{{ path('security_logout') }}">
+                                            <i class="fa fa-sign-out"></i>Выход
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+        {% endblock %}
+
+        <div class="container body-container">
+            {% block body %}
+
+                    {% block main %}
+                        
+                    {% endblock %}
+
+                    {% block sidebar %}
+
+                    {% endblock %}
+
+            {% endblock %}
+        </div>
+
+        {% block footer %}
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div id="footer-copyright" class="col-md-6"></div>
+                        <div id="footer-resources" class="col-md-6"></div>
+                    </div>
+                </div>
+            </footer>
+        {% endblock %}
+
+        {% block javascripts %}
+            <script src="{{ asset('js/app.js') }}"></script>
+            <script src="{{ asset('js/script.js') }}"></script>
+            <script src="{{ asset('js/jquery.form-validator.min.js') }}"></script>
+            <script src="{{ asset('js/date.js') }}"></script>
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+{% include 'views/otchet/ajax/proverka_menu.html' %}
+
+<div class="row">
+    <h3>Статистика нарушений по учреждениям и объектам</h3>
+
+    <div class="row" style="margin-bottom:50px">
+        <form class="has-validation-callback" method="post" action="{{ path('narusheniya_obj') }}" >
+            <div class="col-md-3">
+                <label class="required" for="proverka_date">Дата от (дд.мм.гггг)</label>
+                <input type="text" data-validation-format="dd.mm.yyyy" data-validation-optional="true" data-validation="date" class="form-control" required="required" name="dateOt" id="proverka_date" value="{{ dateOt }}">
+            </div><div class="col-md-3">
+                <label class="required" for="proverka_date">Дата до (дд.мм.гггг)</label>
+                <input type="text" data-validation-format="dd.mm.yyyy" data-validation-optional="true" data-validation="date" class="form-control" required="required" name="dateDo" id="proverka_date" value="{{ dateDo }}">
+            </div>
+            <div class="col-md-3" style="margin-top:25px">
+                <input type="submit" class="btn btn-success" value="Выбрать">
+            </div>
+        </form>
+    </div>
+
+    {% if organizations is empty%}
+        <p>Не добавлены учреждения</p>
+    {% elseif objects is empty%}
+        <p>Не добавлены объекты в учреждениях</p>
+    {% elseif narusheniyaObj is empty%}
+        <p>Нет нарушений в учреждениях в выбранный период</p>
+    {% else %}
+
+        <table class="table table-hover table-bordered numbers">
+            <thead>
+                <tr>
+                    <td></td>
+                    {% for organization in organizations %}
+                        <td>{{organization.nameShort}}</td>
+                    {% endfor %}
+                    <td>Итого</td>
+                </tr>
+            </thead>
+            <tbody>
+
+            {% set flag = "0" %}
+
+            {% for obj in objects %}
+                <tr class="pokazatels{{loop.index}}">
+                    <td class="name">{{obj.name}}</td>
+
+                    {% for organization in organizations %}
+
+                        {% for quantity in narusheniyaObj %}
+
+                            {% if quantity.name == obj.name %}
+
+                                {% if quantity.name_full == organization.nameFull %}
+                                    <td class="pokazatel{{loop.parent.loop.index}}">{{quantity[1]}}</td>
+                                    {% set flag = "1" %}
+                                {% endif %}
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                        {% if flag == "0" %}
+                            <td></td>
+                        {% endif %}
+                        {% set flag = "0" %}
+                    {% endfor %}
+                    <td></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>Всего</td>
+                    {% for organization in organizations %}
+                        <td id="result{{loop.index}}"></td>
+                    {% endfor %}
+                    <td id="vsego"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    {% for organization in organizations %}
+                        <td>{{organization.nameShort}}</td>
+                    {% endfor %}
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

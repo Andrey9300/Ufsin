@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+{% include 'views/otchet/ajax/fkuz_menu.html' %}
+
+<div class="row">
+    <h3>Общая статистика исследований</h3>
+
+	<div class="row" style="margin-bottom:50px">
+		<form class="has-validation-callback" method="post" action="{{ path('type_issledovanie_fkuz') }}" >
+			<div class="col-md-3">
+				<label class="required" for="proverka_date">Дата от (дд.мм.гггг)</label>
+				<input type="text" data-validation-format="dd.mm.yyyy" data-validation-optional="true" data-validation="date" class="form-control" required="required" name="dateOt" id="proverka_date" value="{{ dateOt }}">
+			</div><div class="col-md-3">
+				<label class="required" for="proverka_date">Дата до (дд.мм.гггг)</label>
+				<input type="text" data-validation-format="dd.mm.yyyy" data-validation-optional="true" data-validation="date" class="form-control" required="required" name="dateDo" id="proverka_date" value="{{ dateDo }}">
+			</div>
+			<div class="col-md-3" style="margin-top:25px">
+				<input type="submit" class="btn btn-success" value="Выбрать">
+			</div>
+		</form>
+	</div>
+
+    {% if fkuzs is empty%}
+        <p>Не добавлены филиалы</p>
+    {% elseif issledovanieTypes is empty%}
+        <p>Не добавлены типы исследований</p>
+    {% elseif commonAll is empty%}
+        <p>Не добавлены исследования в учреждениях</p>
+    {% else %}
+	
+        <table class="table table-hover table-bordered numbers" id="common_proverka">
+            <thead>
+            <tr>
+                <td></td>
+                {% for fkuz in fkuzs %}
+                    <td>{{fkuz.nameShort}}</td>
+                {% endfor %}
+                <td id="issledovaniya">Итого</td>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% set flag = "0" %}
+
+            {% for type in issledovanieTypes %}
+                <tr class="pokazatels{{loop.index}}">
+                    <td class="name">{{type.name}}</td>
+
+                    {% for fkuz in fkuzs %}
+
+                        {% for quantity, key in commonAll %}
+
+                            {% if key["name_full"] == fkuz.nameFull %}
+
+                                {% if key["name"] == type.name %}
+
+                                    <td class="pokazatel{{loop.parent.loop.index}}">
+                                        <span>{{ key[1] }}</span>({{ key[2] }})
+                                    </td>
+                                    {% set flag = "1" %}
+                                {% endif %}
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                        {% if flag == "0" %}
+                            <td></td>
+                        {% endif %}
+                        {% set flag = "0" %}
+                    {% endfor %}
+                    <td></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td>Всего</td>
+                {% for fkuz in fkuzs %}
+                    <td id="result{{loop.index}}"></td>
+                {% endfor %}
+                <td id="vsego"></td>
+            </tr>
+            <tr>
+                <td></td>
+                {% for fkuz in fkuzs %}
+                    <td>{{fkuz.nameShort}}</td>
+                {% endfor %}
+                <td></td>
+            </tr>
+            </tfoot>
+        </table>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

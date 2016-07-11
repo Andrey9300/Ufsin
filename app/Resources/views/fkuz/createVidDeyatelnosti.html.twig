@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<h1>Добавить вид деятельности</h1>
+
+{{ form_start(form) }}
+
+<div class="row">
+    <div class="col-md-4">
+        {{ form_label(form.name, 'Наименование') }}
+        {{ form_widget(form.name, { 'attr': {'class': 'form-control', 'spellcheck' : 'true'} }) }}     
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <input type="submit" value="Добавить" class="btn btn-success add_button" />
+    </div>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

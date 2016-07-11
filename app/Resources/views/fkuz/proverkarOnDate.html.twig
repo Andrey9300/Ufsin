@@ -1,0 +1,9 @@
+{% for proverka in proverkarOnDate %}
+    <tr>
+        <td>{{ proverka.nomer }}</td>
+        <td>{{ proverka.date|date("d.m.Y") }}</td>
+        <td><a href="/fkuz/showNakazaniyaFkuz/{{ proverka.id }}">Наказания</a></td>
+        <td><span class="glyphicon glyphicon-pencil edit_in_fkuz" aria-hidden="true" id_now="/fkuz/editProverkaFkuz/{{ proverka.id }}"></span></td>
+        <td><span class="glyphicon glyphicon-remove delete_now" aria-hidden="true" id_now="/fkuz/deleteProverkaFkuz/{{ proverka.id }}"></span></td>
+    </tr>
+{% endfor %}

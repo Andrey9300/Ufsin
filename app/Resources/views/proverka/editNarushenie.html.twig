@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<div class="row">
+    <h1>Редактирование нарушения от «{{ proverkaNarushenie.dateUstraneniya is empty ? "" : proverkaNarushenie.dateUstraneniya|date("d.m.Y") ~ "," }} {{ proverkaNarushenie.description }}»</h1>
+</div>
+
+{{ form_start(form) }}
+
+<div class="row">
+    <div class="col-md-12">
+        <input type="submit" value="Сохранить изменения" class="btn btn-success" style="float:right;"/>
+    </div>
+</div>
+
+<div class="row">
+
+    {{ form_label(form.objects, 'Объект') }}
+    {{ form_widget(form.objects, { 'attr': {'class': 'form-control'} }) }}  
+    {{ form_label(form.description, 'Описание') }}
+    {{ form_widget(form.description, { 'attr': {'class': 'form-control'} }) }}  
+    {{ form_label(form.date_ustraneniya, 'Дата устранения (дд.мм.гггг)') }}
+    {{ form_widget(form.date_ustraneniya, { 'attr': {'class': 'form-control'} }) }}  
+    {{ form_label(form.otmetka_ustraneniya, 'Отметка устранения') }}
+    {{ form_widget(form.otmetka_ustraneniya, { 'attr': {'class': 'form-control'} }) }}  
+    {{ form_label(form.zatraty, 'Затраты') }}
+    {{ form_widget(form.zatraty, { 'attr': {'class': 'form-control'} }) }}    
+    {{ form_label(form.primechanie, 'Примечание') }}
+    {{ form_widget(form.primechanie, { 'attr': {'class': 'form-control'} }) }}      
+    {{ form_label(form.vnimanie, 'Требует особого внимания') }}
+    {{ form_widget(form.vnimanie, { 'attr': {'class': 'checkbox'} }) }}
+	
+</div>
+
+<div class="row"> 
+    <hr/>           
+    <ul class="nav navbar-nav add">
+        <li><a href="/organization/deleteNarushenie/{{ proverkaNarushenie.id }}" class="delete_entity">Удалить нарушение</a></li>
+   </ul>
+</div> 
+
+<div class="row">
+    <div class="col-md-12">
+        <input type="submit" value="Сохранить изменения" class="btn btn-success" style="float:right;"/>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

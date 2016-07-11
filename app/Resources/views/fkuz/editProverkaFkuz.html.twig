@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+    <div class="row">
+        <h3>Редатирование проверки от «{{ proverkaFkuz.date|date("d.m.Y") }}», номер {{ proverkaFkuz.nomer }}</h3>
+    </div>
+
+    {{ form_start(form) }}
+
+    <div class="row">
+        <input type="submit" value="Сохранить изменения" class="btn btn-success" style="float:right;"/>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            {{ form_label(form.nomer, 'Номер проверки') }}
+            {{ form_widget(form.nomer, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="col-md-3">
+            {{ form_label(form.proverkaType, 'Тип проверки') }}
+            {{ form_widget(form.proverkaType, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="col-md-3">
+            {{ form_label(form.date, 'Дата (дд.мм.гггг)') }}
+            {{ form_widget(form.date, { 'attr': {'class': 'form-control', 'data-validation' : 'date', 'data-validation-optional' : 'true', 'data-validation-format' : 'dd.mm.yyyy'} }) }}
+        </div>
+
+        <div class="col-md-3">
+            {{ form_label(form.date_rasporyageniya, 'Дата распоряжения (дд.мм.гггг)') }}
+            {{ form_widget(form.date_rasporyageniya, { 'attr': {'class': 'form-control', 'data-validation' : 'date', 'data-validation-optional' : 'true', 'data-validation-format' : 'dd.mm.yyyy'} }) }}
+        </div>
+        <div class="col-md-3">
+            {{ form_label(form.date_akt, 'Дата выдачи акта (дд.мм.гггг)') }}
+            {{ form_widget(form.date_akt, { 'attr': {'class': 'form-control', 'data-validation' : 'date', 'data-validation-optional' : 'true', 'data-validation-format' : 'dd.mm.yyyy'} }) }}
+        </div>
+        <div class="col-md-3">
+            {{ form_label(form.date_predpisaniya, 'Дата предписания (дд.мм.гггг)') }}
+            {{ form_widget(form.date_predpisaniya, { 'attr': {'class': 'form-control', 'data-validation' : 'date', 'data-validation-optional' : 'true', 'data-validation-format' : 'dd.mm.yyyy'} }) }}
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            {{ form_label(form.kem_vydano, 'Кем выдано') }}
+            {{ form_widget(form.kem_vydano, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+    </div>
+
+    <hr/>
+
+    <div class="dobavlenie row">
+
+        <div class="col-md-4">
+            <div class="nakazanie" data-prototype="{{ form_widget(form.proverkaNakazanieFkuz.vars.prototype)|e }}"></div>
+        </div>
+        <div class="col-md-4 list_add"></div>
+        <div class="col-md-4 list_now">
+            {% for nakazanie in proverkaFkuz.getProverkaNakazanieFkuz %}
+                <div>Добавленные <strong>{{ nakazanie.date|date("d.m.Y") }}</strong>, {{ nakazanie.nomer }}<button style="float:none" id="/organization/deleteNakazanie/{{ nakazanie.id }}" class="close delete_after_save" type="button"><span aria-hidden="true">×</span></button></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+        <ul class="nav navbar-nav add">
+            <li><a href="/fkuz/deleteProverkaFkuz/{{ proverkaFkuz.id }}" class="delete_entity">Удалить проверку</a></li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <input type="submit" value="Сохранить изменения" class="btn btn-success" style="float:right;"/>
+    </div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

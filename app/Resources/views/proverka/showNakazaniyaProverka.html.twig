@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<div class="row">
+
+    <div class="col-md-3">
+        <div>Выберите проверку</div>
+        <select class="form-control" id="proverkiNakazaniya">
+            {% for prov in proverka %}
+            <option value="{{ prov.id }}">{{ prov.nomer }}, {{prov.date|date("d.m.Y") }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    
+    <div class="col-md-3"> 
+        <div>Выберите наказание</div>
+        <div id="nakazaniya"></div>
+    </div>
+</div>
+   
+<div class="row">  
+    <div class="col-md-3">
+        <input type="submit" value="Редактировать наказание" class="btn btn-success" id="showNakazaniya" style="margin-top:30px"/>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

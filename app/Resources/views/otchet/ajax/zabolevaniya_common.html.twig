@@ -1,0 +1,46 @@
+{% if organizations is empty%}
+    <p>Не добавлены учреждения</p>
+{% elseif onOrganization is empty%}
+    <p>Не добавлены заболевшие</p>
+{% else %}
+    <table class="table table-hover table-bordered numbers">
+        <thead>
+            <tr>
+                <td>Учреждение</td>
+                <td id="zabolevaniya">Количество</td>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% set flag = "0" %}
+
+        {% for organization in organizations %}
+            <tr  class="pokazatels{{loop.index}}">
+                <td class="name">{{organization.nameShort}}</td>
+
+                    {% for quantity in onOrganization %}
+
+                        {% if quantity.name_full == organization.nameFull %}
+
+                            <td  class="pokazatel{{loop.parent.loop.index}}">{{quantity[1]}}</td>
+                            {% set flag = "1" %}
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                    {% if flag == "0" %}
+                        <td></td>
+                    {% endif %}
+                    {% set flag = "0" %}
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Всего</td>
+                <td id="vsego_zabolevchih"></td>
+            </tr>
+        </tfoot>
+    </table>
+{% endif %}

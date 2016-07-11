@@ -1,0 +1,416 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+{% include 'views/otchet/ajax/proverka_menu.html' %}
+
+<div class="row">
+    <h3>Статистика нарушений по учреждениям и типам проверки</h3>
+
+    <div class="row" style="margin-bottom:50px">
+        <form class="has-validation-callback" method="post" action="{{ path('narusheniya') }}" >
+            <div class="col-md-3">
+                <label class="required" for="proverka_date">Дата от (дд.мм.гггг)</label>
+                <input type="text" data-validation-format="dd.mm.yyyy" data-validation-optional="true" data-validation="date" class="form-control" required="required" name="dateOt" id="proverka_date" value="{{ dateOt }}">
+            </div><div class="col-md-3">
+                <label class="required" for="proverka_date">Дата до (дд.мм.гггг)</label>
+                <input type="text" data-validation-format="dd.mm.yyyy" data-validation-optional="true" data-validation="date" class="form-control" required="required" name="dateDo" id="proverka_date" value="{{ dateDo }}">
+            </div>
+            <div class="col-md-3" style="margin-top:25px">
+                <input type="submit" class="btn btn-success" value="Выбрать">
+            </div>
+        </form>
+    </div>
+
+    {% if proverkaType is empty%}
+        <p>Не добавлены учреждения или проверки или нет проверок в выбранный период</p>
+    {% elseif proverka_temp is empty%}
+        <p>Не добавлены учреждения или проверки или нет проверок в выбранный период</p>
+    {% else %}
+
+        <div>В - выполнено, Н - невыполнено, Ч - частично, И - итого</div>
+        <table class="table table-hover table-bordered numbers" style="position:absolute; left:5px; font-size:14px;">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td colspan="16">Плановые</td>
+                    <td colspan="12">Внеплановые</td>
+                    <td colspan="8" id="narusheniya">Итог</td>
+                </tr>
+                <tr>
+                    <td>Учреждение</td>
+                    {% for type in proverkaType %}
+                        <td colspan="4">{{type.name}}</td>
+                    {% endfor %}
+                    <td colspan="4">Плановые</td>
+                    <td colspan="4">Внеплановые</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    {% for type in proverkaType %}
+                        <td>В</td>
+                        <td>Н</td>
+                        <td>Ч</td>
+                        <td>И</td>
+                    {% endfor %}
+                    <td>В</td>
+                    <td>Н</td>
+                    <td>Ч</td>
+                    <td>И</td>
+                    <td>В</td>
+                    <td>Н</td>
+                    <td>Ч</td>
+                    <td>И</td>
+                </tr>
+            </thead>
+            <tbody>
+
+            {% set flag1 = "0" %}
+            {% set flag2 = "0" %}
+            {% set flag3 = "0" %}
+            {% set count1 = "0" %}
+            {% set count2 = "0" %}
+            {% set count3 = "0" %}
+            {% set count_all = "0" %}
+            {% set count_P_V = "0" %}
+            {% set count_P_N = "0" %}
+            {% set count_P_CH = "0" %}
+            {% set count_V_V = "0" %}
+            {% set count_V_N = "0" %}
+            {% set count_V_CH = "0" %}
+            {% set otmetki = ["1", "0", "-1"] %}
+
+            {% set cgsn_v = "0" %}
+            {% set cgsn_n = "0" %}
+            {% set cgsn_ch = "0" %}
+            {% set kr_v = "0" %}
+            {% set kr_n = "0" %}
+            {% set kr_ch = "0" %}
+            {% set inspec_v = "0" %}
+            {% set inspec_n = "0" %}
+            {% set inspec_ch = "0" %}
+            {% set dk_v = "0" %}
+            {% set dk_n = "0" %}
+            {% set dk_ch = "0" %}
+            {% set prok_v = "0" %}
+            {% set prok_n = "0" %}
+            {% set prok_ch = "0" %}
+            {% set gal_v = "0" %}
+            {% set gal_n = "0" %}
+            {% set gal_ch = "0" %}
+            {% set cgsn_v_v = "0" %}
+            {% set cgsn_v_n = "0" %}
+            {% set cgsn_v_ch = "0" %}
+
+
+            {% for proverka in proverka_temp %}
+                {% for key, prov in proverka %}
+
+
+                    {% if key == "ЦГСЭН" %}
+                        {% for k, p in prov %}
+                            {% for k1, p1 in p %}
+
+                                {% if k1 == "1" %}
+                                    {% set cgsn_v = cgsn_v + p1 %}
+                                {% endif %}
+                                {% if k1 == "0" %}
+                                    {% set cgsn_n = cgsn_n + p1 %}
+                                {% endif %}
+                                {% if k1 == "-1" %}
+                                    {% set cgsn_ch = cgsn_ch + p1 %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if key == "Контрольная проверка" %}
+                        {% for k, p in prov %}
+                            {% for k1, p1 in p %}
+
+                                {% if k1 == "1" %}
+                                    {% set kr_v = kr_v + p1 %}
+                                {% endif %}
+                                {% if k1 == "0" %}
+                                    {% set kr_n = kr_n + p1 %}
+                                {% endif %}
+                                {% if k1 == "-1" %}
+                                    {% set kr_ch = kr_ch + p1 %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if key == "Инспектирование" %}
+                        {% for k, p in prov %}
+                            {% for k1, p1 in p %}
+
+                                {% if k1 == "1" %}
+                                    {% set inspec_v = inspec_v + p1 %}
+                                {% endif %}
+                                {% if k1 == "0" %}
+                                    {% set inspec_n = inspec_n + p1 %}
+                                {% endif %}
+                                {% if k1 == "-1" %}
+                                    {% set inspec_ch = inspec_ch + p1 %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if key == "День куратора" %}
+                        {% for k, p in prov %}
+                            {% for k1, p1 in p %}
+
+                                {% if k1 == "1" %}
+                                    {% set dk_v = dk_v + p1 %}
+                                {% endif %}
+                                {% if k1 == "0" %}
+                                    {% set dk_n = dk_n + p1 %}
+                                {% endif %}
+                                {% if k1 == "-1" %}
+                                    {% set dk_ch = dk_ch + p1 %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if key == "Прокуратура" %}
+                        {% for k, p in prov %}
+                            {% for k1, p1 in p %}
+
+                                {% if k1 == "1" %}
+                                    {% set prok_v = prok_v + p1 %}
+                                {% endif %}
+                                {% if k1 == "0" %}
+                                    {% set prok_n = prok_n + p1 %}
+                                {% endif %}
+                                {% if k1 == "-1" %}
+                                    {% set prok_ch = prok_ch + p1 %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if key == "По жалобе" %}
+                        {% for k, p in prov %}
+                            {% for k1, p1 in p %}
+
+                                {% if k1 == "1" %}
+                                    {% set gal_v = gal_v + p1 %}
+                                {% endif %}
+                                {% if k1 == "0" %}
+                                    {% set gal_n = gal_n + p1 %}
+                                {% endif %}
+                                {% if k1 == "-1" %}
+                                    {% set gal_ch = gal_ch + p1 %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if key == "ЦГСЭН внеплановая" %}
+                        {% for k, p in prov %}
+                            {% for k1, p1 in p %}
+
+                                {% if k1 == "1" %}
+                                    {% set cgsn_v_v = cgsn_v_v + p1 %}
+                                {% endif %}
+                                {% if k1 == "0" %}
+                                    {% set cgsn_v_n = cgsn_v_n + p1 %}
+                                {% endif %}
+                                {% if k1 == "-1" %}
+                                    {% set cgsn_v_ch = cgsn_v_ch + p1 %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+
+            {% for key, proverki in proverka_temp %}
+                <tr class="pokazatels{{loop.index}}">
+                    <td class="name">{{ key }}</td>
+                {% for type in proverkaType %}
+                    {% for key_proverka, proverka in proverki %}
+                        {% if type.name == key_proverka %}
+                            {% for key, otmetka in proverka %}
+
+                                {% for key, count in otmetka %}
+
+                                    {% if otmetka["1"] is defined %}
+                                        {% if key == "1" %}
+                                            {% set count_all = count_all + count %}
+                                            {% set count1 = count1 + count %}
+
+                                            {% if key_proverka == "ЦГСЭН" or
+                                                  key_proverka == "Контрольная проверка" or
+                                                  key_proverka == "Инспектирование" or
+                                                  key_proverka == "День куратора" %}
+                                                {% set count_P_V = count_P_V + count %}
+                                            {% else %}
+                                                {% set count_V_V = count_V_V + count %}
+                                            {% endif %}
+
+                                            {% set flag1 = "1" %}
+                                        {% endif %}
+                                    {% endif %}
+                                    {% if otmetka["0"] is defined %}
+                                        {% if key == "0" %}
+                                            {% set count_all = count_all + count %}
+                                            {% set count2 = count2 + count %}
+
+                                            {% if key_proverka == "ЦГСЭН" or
+                                                  key_proverka == "Контрольная проверка" or
+                                                  key_proverka == "Инспектирование" or
+                                                  key_proverka == "День куратора" %}
+                                                {% set count_P_N = count_P_N + count %}
+                                            {% else %}
+                                                {% set count_V_N = count_V_N + count %}
+                                            {% endif %}
+
+                                            {% set flag2 = "1" %}
+                                        {% endif %}
+                                    {% endif %}
+                                    {% if otmetka["-1"] is defined %}
+                                        {% if key == "-1" %}
+                                            {% set count_all = count_all + count %}
+                                            {% set count3 = count3 + count %}
+
+                                            {% if key_proverka == "ЦГСЭН" or
+                                                  key_proverka == "Контрольная проверка" or
+                                                  key_proverka == "Инспектирование" or
+                                                  key_proverka == "День куратора" %}
+                                                {% set count_P_CH = count_P_CH + count %}
+                                            {% else %}
+                                                {% set count_V_CH = count_V_CH + count %}
+                                            {% endif %}
+
+                                            {% set flag3 = "1" %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+
+
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if flag1 == "1" %}
+                        <td>{{ count1 }}</td>
+                    {% else %}
+                        <td>-</td>
+                    {% endif %}
+                    {% if flag2 == "1" %}
+                        <td>{{ count2 }}</td>
+                    {% else %}
+                        <td>-</td>
+                    {% endif %}
+                    {% if flag3 == "1" %}
+                        <td>{{ count3 }}</td>
+                    {% else %}
+                        <td>-</td>
+                    {% endif %}
+                    {% if count_all %}
+                        <td>{{ count_all }}</td>
+                    {% else %}
+                        <td>-</td>
+                    {% endif %}
+
+                    {% set flag1 = "0" %}
+                    {% set flag2 = "0" %}
+                    {% set flag3 = "0" %}
+                    {% set count1 = "0" %}
+                    {% set count2 = "0" %}
+                    {% set count3 = "0" %}
+                    {% set count_all = "0" %}
+
+                {% endfor %}
+
+                    <td>{{ count_P_V }}</td>
+                    <td>{{ count_P_N }}</td>
+                    <td>{{ count_P_CH }}</td>
+                    <td>{{ count_P_V + count_P_N + count_P_CH }}</td>
+                    <td>{{ count_V_V }}</td>
+                    <td>{{ count_V_N }}</td>
+                    <td>{{ count_V_CH }}</td>
+                    <td>{{ count_V_V + count_V_N + count_V_CH }}</td>
+
+
+                    {% set count_P_V = "0" %}
+                    {% set count_P_N = "0" %}
+                    {% set count_P_CH = "0" %}
+                    {% set count_V_V = "0" %}
+                    {% set count_V_N = "0" %}
+                    {% set count_V_CH = "0" %}
+
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td rowspan="4" style="padding-top:50px">Всего</td>
+                    <td>{{ cgsn_v }}</td>
+                    <td>{{ cgsn_n }}</td>
+                    <td>{{ cgsn_ch }}</td>
+                    <td>{{ cgsn_v + cgsn_n + cgsn_ch }}</td>
+                    <td>{{ kr_v }}</td>
+                    <td>{{ kr_n }}</td>
+                    <td>{{ kr_ch }}</td>
+                    <td>{{ kr_v + kr_n + kr_ch}}</td>
+                    <td>{{ inspec_v }}</td>
+                    <td>{{ inspec_n }}</td>
+                    <td>{{ inspec_ch }}</td>
+                    <td>{{ inspec_v + inspec_n + inspec_ch }}</td>
+                    <td>{{ dk_v }}</td>
+                    <td>{{ dk_n }}</td>
+                    <td>{{ dk_ch }}</td>
+                    <td>{{ dk_v + dk_n + dk_ch }}</td>
+                    <td>{{ prok_v }}</td>
+                    <td>{{ prok_n }}</td>
+                    <td>{{ prok_ch }}</td>
+                    <td>{{ prok_v + prok_n + prok_ch }}</td>
+                    <td>{{ gal_v }}</td>
+                    <td>{{ gal_n }}</td>
+                    <td>{{ gal_ch }}</td>
+                    <td>{{ gal_v + gal_n + gal_ch }}</td>
+                    <td>{{ cgsn_v_v }}</td>
+                    <td>{{ cgsn_v_n }}</td>
+                    <td>{{ cgsn_v_ch }}</td>
+                    <td>{{ cgsn_v_v + cgsn_v_n + cgsn_v_ch }}</td>
+                    <td style="text-align:center;padding-top:50px" colspan="8" rowspan="4" id="vsego">{{ cgsn_v + kr_v + inspec_v + dk_v + cgsn_n + kr_n + inspec_n + dk_n + cgsn_ch + kr_ch + inspec_ch + dk_ch + prok_v + gal_v + cgsn_v_v + prok_n + gal_n + cgsn_v_n + prok_ch + gal_ch + cgsn_v_ch }} ({{cgsn_v + kr_v + inspec_v + dk_v + prok_v + gal_v + cgsn_v_v }})</td>
+                </tr>
+                <tr>
+                    <td colspan="16">Плановые</td>
+                    <td colspan="12">Внеплановые</td>
+                </tr>
+                <tr>
+                    <td colspan="4">В</td>
+                    <td colspan="4">Н</td>
+                    <td colspan="4">Ч</td>
+                    <td colspan="4">И</td>
+                    <td colspan="4">В</td>
+                    <td colspan="4">Н</td>
+                    <td colspan="2">Ч</td>
+                    <td colspan="2">И</td>
+                </tr>
+                <tr>
+                    <td colspan="4">{{ cgsn_v + kr_v + inspec_v + dk_v }}</td>
+                    <td colspan="4">{{ cgsn_n + kr_n + inspec_n + dk_n }}</td>
+                    <td colspan="4">{{ cgsn_ch + kr_ch + inspec_ch + dk_ch }}</td>
+                    <td colspan="4">{{ cgsn_v + kr_v + inspec_v + dk_v + cgsn_n + kr_n + inspec_n + dk_n + cgsn_ch + kr_ch + inspec_ch + dk_ch }}</td>
+                    <td colspan="4">{{ prok_v + gal_v + cgsn_v_v }}</td>
+                    <td colspan="4">{{ prok_n + gal_n + cgsn_v_n }}</td>
+                    <td colspan="2">{{ prok_ch + gal_ch + cgsn_v_ch }}</td>
+                    <td colspan="2">{{ prok_v + gal_v + cgsn_v_v + prok_n + gal_n + cgsn_v_n + prok_ch + gal_ch + cgsn_v_ch }}</td>
+                </tr>
+            </tfoot>
+
+        </table>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

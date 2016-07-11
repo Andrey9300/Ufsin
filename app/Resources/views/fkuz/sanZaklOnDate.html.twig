@@ -1,0 +1,9 @@
+{% for sanZakl in sanZaklOnDate %}
+	<tr>
+		<td>{{ sanZakl.nomer }}</td>
+		<td>{{ sanZakl.date|date("d.m.Y") }}</td>
+		<td>{{ sanZakl.vidDeytelnosti }}</td>
+        <td><span class="glyphicon glyphicon-pencil edit_in_fkuz" aria-hidden="true" id_now="/fkuz/editSanZakl/{{ sanZakl.id }}"></span></td>
+		<td><span class="glyphicon glyphicon-remove delete_now" aria-hidden="true" id_now="/fkuz/deleteSanZakl/{{ sanZakl.id }}"></span></td>
+	</tr>
+{% endfor %}

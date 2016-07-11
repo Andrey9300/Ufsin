@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<h1>Добавление договора для {{organization_name}}</h1>
+
+{{ form_start(form) }}
+
+<div class="form-group" style="height:30px">
+    <input type="submit" value="Добавить договор" class="btn btn-success" style="float:right;"/>
+</div>
+
+    <div class="row">
+        <div class="col-lg-4">
+            {{ form_label(form.nomer, 'Номер договора') }}
+            {{ form_widget(form.nomer, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div class="col-lg-4">
+            {{ form_label(form.date, 'Дата (гггг-мм-дд)') }}
+            {{ form_widget(form.date, { 'attr': {'class': 'form-control'} }) }}    
+        </div>
+        <div class="col-lg-4">
+            {{ form_label(form.summa, 'Сумма') }}
+            {{ form_widget(form.summa, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+    </div>
+
+    {{ form_label(form.organization_posrednik, 'Организация') }}
+    {{ form_widget(form.organization_posrednik, { 'attr': {'class': 'form-control'} }) }}
+
+<h4>Объекты:</h4>
+
+<div class="container">
+    <div class="row dogovor_objects">
+        <div class="col-xs-6">
+        
+            {% for obj in form.dogovor_objects %}
+                {% if obj.vars.value < (form.dogovor_objects|length)/2 %}
+                    <div>
+                        {{ form_errors(obj) }}
+                        {{ form_widget(obj) }}
+                        {{ form_label(obj) }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+            
+        </div>
+        <div class="col-xs-6">
+            
+            {% for obj in form.dogovor_objects %}
+                {% if obj.vars.value >= (form.dogovor_objects|length)/2 %}
+                    <div>
+                        {{ form_errors(obj) }}
+                        {{ form_widget(obj) }}
+                        {{ form_label(obj) }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+            
+        </div>
+    </div><input type="button" value="Выделить все" class="btn btn-xs btn-primary" id="checkedObjectsAll" style="float:right;"/>
+</div>
+         
+<h4>Тип договора:</h4>
+<div class="form-group">
+    {{ form_widget(form.dogovor_type_id) }}
+</div>
+
+<div class="form-group" style="height:30px">
+    <input type="submit" value="Добавить договор" class="btn btn-success" style="float:right;"/>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

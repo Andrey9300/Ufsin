@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'error' %}
+
+{% block main %}
+    <h1 class="text-danger">Произошла ошибка</h1>
+
+    <p class="lead">
+        Скорее всего вы не верно ввели данные или произошла техническая ошибка.
+    </p>
+    
+    <p>
+        Пожалуйста, проверьте вводимые данные <a href="#" id="back_page">на предыдущей странице</a> и/или повторите снова.
+    </p>
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

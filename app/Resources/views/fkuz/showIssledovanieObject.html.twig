@@ -1,0 +1,11 @@
+{% if issledovanieObjectFkuz is empty %}
+    <div>Нет исследований</div>
+{% else %}
+    <select class="form-control" id="labIssl">
+
+        {% for issl in issledovanieObjectFkuz %}
+            <option value="{{ issl.id }}">{{issl.result }}, {{issl.issledovaniePokazatelFkuz.name }}</option>
+        {% endfor %}
+
+    </select>
+{% endif %}    

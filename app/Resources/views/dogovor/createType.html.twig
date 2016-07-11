@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<div class="row">
+    <h1>Добавить тип договора</h1>
+</div>
+
+{{ form_start(form) }}
+
+<div class="row">
+    <div class="col-md-4">
+        {{ form_label(form.name, 'Наименование') }}
+        {{ form_widget(form.name, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_label(form.parent, 'Родительская категория') }}
+        {{ form_widget(form.parent, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+	<div class="col-md-4">
+		<input type="submit" value="Добавить" class="btn btn-success add_button"/>
+	</div>
+    <div class="col-md-4 list_now">
+        {% if dogovorTypes is empty%}
+            <div><strong>Вы еще не добавляли типы договоров</strong></div>
+        {% else %}
+            {% for type in dogovorTypes %}
+                <div>Добавленные <strong>{{ type.name }}</strong><div style="display:inline"><button style="float:none" id_now="/dogovor/deleteType/{{ type.id }}" class="close delete_now" type="button"><span aria-hidden="true">×</span></button></div></div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+
+	
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

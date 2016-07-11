@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<div class="row">
+    <h1>Выберите осужденного:</h1>
+</div>
+
+<div class="row">
+    <select class="form-control">
+        {% for osugdenyi in osugdenyis %}
+        <option value="{{ osugdenyi.id }}">{{ osugdenyi.fio }}, {{osugdenyi.dateBirthday|date("d.m.Y") }}, {{ osugdenyi.placeProgivaniya }} </option>
+        {% endfor %}
+    </select>
+</div>
+
+<div class="row">
+    <input type="submit" value="Редактировать карточку заболевшего" class="btn btn-success" id="showOsugdenyi" style="margin-top:10px"/>
+</div>    
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

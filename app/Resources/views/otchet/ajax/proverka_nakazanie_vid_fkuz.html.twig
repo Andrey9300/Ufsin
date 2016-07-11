@@ -1,0 +1,71 @@
+<div class="row">
+
+    {% if allNamefilial is empty%}
+        <p>Не добавлены филиалы</p>
+    {% elseif narusheniyaVidSlug is empty%}
+        <p>Не добавлены нарушения в учреждениях</p>
+    {% elseif narusheniyaVidAdm is empty%}
+        <p>Нет нарушений в учреждениях в выбранный период</p>
+    {% else %}
+
+        <table class="table table-hover table-bordered numbers">
+            <thead>
+            <tr>
+                <td></td>
+                <td style="font-size:12px">Служебные</td>
+                <td style="font-size:12px">Административные</td>
+                <td style="font-size:12px">Итог</td>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% set flag1= "0" %}
+            {% set flag2 = "0" %}
+
+            {% for organization in allNamefilial %}
+                <tr class="pokazatels{{loop.index}}">
+                    <td class="name">{{ organization.nameShort|slice(3,7) }}</td>
+
+                    {% for slug in narusheniyaVidSlug %}
+
+                        {% if slug.name_full == organization.nameFull %}
+                            <td class="pokazatel1">{{ slug.1 }}</td>
+                            {% set flag1 = "1" %}
+                        {% endif %}
+
+                    {% endfor %}
+
+                    {% if flag1 == "0" %}
+                        <td></td>
+                    {% endif %}
+                    {% set flag1 = "0" %}
+
+                    {% for adm in narusheniyaVidAdm %}
+
+                        {% if adm.name_full == organization.nameFull %}
+                            <td class="pokazatel2">{{ adm.1 }}</td>
+                            {% set flag2 = "1" %}
+                        {% endif %}
+
+                    {% endfor %}
+
+                    {% if flag2 == "0" %}
+                        <td></td>
+                    {% endif %}
+                    {% set flag2 = "0" %}
+
+                    <td></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td>Всего</td>
+                <td id="result1"></td>
+                <td id="result2"></td>
+                <td id="vsego"></td>
+            </tr>
+            </tfoot>
+        </table>
+    {% endif %}
+</div>

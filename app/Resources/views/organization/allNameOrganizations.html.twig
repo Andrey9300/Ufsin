@@ -1,0 +1,9 @@
+<ul class="dropdown-menu">
+    {% if organizations is empty%}
+        <li><a href="#">Учреждения не добавлены</a></li>
+    {% else %}
+        {% for org in organizations %}
+            <li><a href="{{ path('current_organization', {'id': org.id}) }}">{{org.nameShort}}</a></li>
+        {% endfor %}
+    {% endif %}
+</ul>

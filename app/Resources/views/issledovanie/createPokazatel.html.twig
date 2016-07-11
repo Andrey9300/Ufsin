@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<div class="row">
+    <h1>Добавить показатель исследования</h1>
+</div>
+
+{{ form_start(form) }}
+
+<div class="row">
+    <div class="col-md-4">
+        {{ form_label(form.name, 'Наименование') }}
+        {{ form_widget(form.name, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_label(form.issledovanieType, 'Тип исследования') }}
+        {{ form_widget(form.issledovanieType, { 'attr': {'class': 'form-control'} }) }}
+
+        {{ form_label(form.normativ_znak, 'Если больше "+" (меньше "-") или +/- (присутствует/отсутствует)') }}
+        {{ form_widget(form.normativ_znak, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_label(form.normativ, 'Начало диапазона (от) или число') }}
+        {{ form_widget(form.normativ, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_label(form.normativ_dob, 'Норматив до') }}
+        {{ form_widget(form.normativ_dob, { 'attr': {'class': 'form-control'} }) }}
+        
+        {{ form_label(form.edinicy_issledovaniya, 'Ед. изм.') }}
+        {{ form_widget(form.edinicy_issledovaniya, { 'attr': {'class': 'form-control'} }) }}
+        <input type="submit" value="Добавить" class="btn btn-success add_button" id="createPokazatel"/>
+    </div>    
+    <div class="col-md-4"></div>
+    <div class="col-md-4 list_now">
+        {% for pokazatel in allPokazatels %}
+            <div>Добавленные <strong>{{ pokazatel.name }}</strong><div style="display:inline"><button style="float:none" id_now="/issledovanie/deletePokazatel/{{ pokazatel.id }}" class="close delete_now" type="button"><span aria-hidden="true">×</span></button></div></div>
+        {% endfor %}
+    </div>  
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

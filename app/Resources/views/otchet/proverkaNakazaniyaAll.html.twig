@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+{% include 'views/otchet/ajax/proverka_menu.html' %}
+
+<div class="row">
+    <h3>Привлеченные к наказанию</h3>
+
+    <div class="row" style="margin-bottom:50px">
+        <form class="has-validation-callback" method="post" action="{{ path('proverka_nakazaniya') }}">
+            <div class="col-md-3">
+                <label class="required" for="proverka_date">Дата от (дд.мм.гггг)</label>
+                <input type="text" data-validation-format="dd.mm.yyyy" data-validation-optional="true" data-validation="date" class="form-control" required="required" name="dateOt" id="proverka_date" value="{{ dateOt }}">
+            </div><div class="col-md-3">
+                <label class="required" for="proverka_date">Дата до (дд.мм.гггг)</label>
+                <input type="text" data-validation-format="dd.mm.yyyy" data-validation-optional="true" data-validation="date" class="form-control" required="required" name="dateDo" id="proverka_date" value="{{ dateDo }}">
+            </div>
+            <div class="col-md-3" style="margin-top:25px">
+                <input type="submit" class="btn btn-success" value="Выбрать">
+            </div>
+        </form>
+    </div>
+
+    {% if proverkaNakazaniya is empty%}
+        <p>Нет наказаний в учреждениях в выбранный период</p>
+    {% else %}
+
+        <table class="table table-hover main narusheniyaOrganization">
+            <thead>
+                <tr>
+                    <td>ИК</td>
+                    <td>Номер</td>
+                    <td>ФИО</td>
+                    <td>Дата</td>
+                    <td>Должность</td>
+                    <td>Звание</td>
+                    <td>Тип наказания</td>
+                    <td>Вид наказания</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for proverka in proverkaNakazaniya %}
+                    <tr>
+                        <td>{{ proverka.name_short }}</td>
+                        <td>{{ proverka.nomer }}</td>
+                        <td>{{ proverka.fio }}</td>
+                        <td>{{ proverka.date|date("d.m.Y") }}</td>
+                        <td>{{ proverka.dolgnost }}</td>
+                        <td>{{ proverka.zvanie }}</td>
+                        <td>{{ proverka.type }}</td>
+                        <td>{{ proverka.podchinennost }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

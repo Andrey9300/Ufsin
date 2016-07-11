@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<div class="row">
+    <h1>Изменение договора «{{ dogovor.nomer }}»</h1>
+</div>
+
+{{ form_start(form) }}
+
+<div class="row">
+    <div class="col-md-12">
+        <input type="submit" value="Сохранить изменения" class="btn btn-success" style="float:right;"/>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        {{ form_label(form.nomer, 'Номер договора') }}
+        {{ form_widget(form.nomer, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+    <div class="col-md-3">
+        {{ form_label(form.date, 'Дата (дд.мм.гггг)') }}
+        {{ form_widget(form.date, { 'attr': {'class': 'form-control', 'data-validation' : 'date', 'data-validation-optional' : 'true', 'data-validation-format' : 'dd.mm.yyyy'} }) }}    
+    </div>
+    <div class="col-md-3">
+        {{ form_label(form.summa, 'Сумма') }}
+        {{ form_widget(form.summa, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+    <div class="col-md-3">
+        {{ form_label(form.dogovorType, 'Тип договора') }}
+        {{ form_widget(form.dogovorType, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        {{ form_label(form.organization_posrednik, 'Организация') }}
+        {{ form_widget(form.organization_posrednik, { 'attr': {'class': 'form-control'} }) }}  
+    </div>
+</div>
+
+<div class="row dogovor_objects">
+    <div class="col-md-12">
+        <h4>Объекты</h4>
+    </div>
+    <div class="col-md-6">
+    
+        {% for obj in form.dogovor_objects %}
+            {% if loop.index <= (form.dogovor_objects|length)/2 %}
+                <div>
+                    {{ form_widget(obj) }}
+                    {{ form_label(obj) }}
+                </div>
+            {% endif %}
+        {% endfor %}
+        
+    </div>
+    <div class="col-md-6">
+        
+        {% for obj in form.dogovor_objects %}
+            {% if loop.index > (form.dogovor_objects|length)/2 %}
+                <div>
+                    {{ form_widget(obj) }}
+                    {{ form_label(obj) }}
+                </div>
+            {% endif %}
+        {% endfor %}
+        
+    </div>
+    <div class="col-md-12">
+        <input type="button" value="Выделить все" class="btn btn-xs btn-primary" id="checkedObjectsAll"/>
+    </div>    
+</div>
+
+<hr/>
+
+<div class="row">            
+    <ul class="nav navbar-nav add">
+        <li><a href="/dogovor/deleteDogovor/{{ dogovor.id }}" class="delete_entity">Удалить договор</a></li>
+   </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <input type="submit" value="Сохранить изменения" class="btn btn-success" style="float:right;"/>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+    {% include 'views/otchet/ajax/fkuz_menu.html' %}
+
+    <div class="row">
+        <h3>Статистика наказаний по виду, подчиненности, типу</h3>
+
+        <div class="row" style="margin-bottom:50px">
+            <form class="has-validation-callback" method="post" action="{{ path('nakazaniya_fkuz') }}" >
+                <div class="col-md-3">
+                    <label class="required" for="proverka_date">Дата от (дд.мм.гггг)</label>
+                    <input type="text" data-validation-format="dd.mm.yyyy" data-validation-optional="true" data-validation="date" class="form-control" required="required" name="dateOt" id="proverka_date" value="{{ dateOt }}">
+                </div><div class="col-md-3">
+                    <label class="required" for="proverka_date">Дата до (дд.мм.гггг)</label>
+                    <input type="text" data-validation-format="dd.mm.yyyy" data-validation-optional="true" data-validation="date" class="form-control" required="required" name="dateDo" id="proverka_date" value="{{ dateDo }}">
+                </div>
+                <div class="col-md-3" style="margin-top:25px">
+                    <input type="submit" class="btn btn-success" value="Выбрать">
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-6">
+            {% include 'otchet/ajax/proverka_nakazanie_vid_fkuz.html.twig' with {'allNamefilial' : allNamefilial, 'narusheniyaVidSlug' : narusheniyaVidSlug, 'narusheniyaVidAdm' : narusheniyaVidAdm} %}
+        </div>
+
+        <div class="col-md-6">
+            {% include 'otchet/ajax/proverka_nakazanie_podch_fkuz.html.twig' with {'allNamefilial' : allNamefilial, 'narusheniyaPeoAtt' : narusheniyaPeoAtt, 'narusheniyaPeoVol' : narusheniyaPeoVol} %}
+        </div>
+    </div>
+    <br>
+            {% include 'otchet/ajax/proverka_nakazanie_type_fkuz.html.twig' with {'allNamefilial' : allNamefilial, 'narusheniyaType1' : narusheniyaType1, 'narusheniyaType2' : narusheniyaType2, 'narusheniyaType3' : narusheniyaType3} %}
+
+
+
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

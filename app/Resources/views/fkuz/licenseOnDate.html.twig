@@ -1,0 +1,9 @@
+{% for license in licenseOnDate %}
+	<tr>
+		<td>{{ license.nomer }}</td>
+		<td>{{ license.date|date("d.m.Y") }}</td>
+		<td>{{ license.vidDeytelnosti }}</td>
+        <td><span class="glyphicon glyphicon-pencil edit_in_fkuz" aria-hidden="true" id_now="/fkuz/editLicense/{{ license.id }}"></span></td>
+		<td><span class="glyphicon glyphicon-remove delete_now" aria-hidden="true" id_now="/fkuz/deleteLicense/{{ license.id }}"></span></td>
+	</tr>
+{% endfor %}

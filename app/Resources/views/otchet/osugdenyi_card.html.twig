@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<div class="row">
+    <h3>Карточка осужденного «{{ osugdenyi.fio }}»</h3>
+</div>
+
+<div class="row">
+    <table class="table table-hover table-bordered">
+        <tbody>
+            <tr>
+                <td>ФИО</td>
+                <td>{{ osugdenyi.fio }}</td>
+            </tr>
+            <tr>
+                <td>Дата рождения</td>
+                <td>{{ osugdenyi.dateBirthday|date("d.m.Y") }}</td>
+            </tr>
+            <tr>
+                <td>Место работы</td>
+                <td>{{ osugdenyi.placeJob }}</td>
+            </tr>
+            <tr>
+                <td>Место учебы</td>
+                <td>{{ osugdenyi.placeStudy }}</td>
+            </tr>
+            <tr>
+                <td>Место проживания</td>
+                <td>{{ osugdenyi.placeProgivaniya }}</td>
+            </tr>
+            <tr>
+                <td>Дата заболевания</td>
+                <td>{{ osugdenyi.dateViyavleniya|date("d.m.Y") }}</td>
+            </tr>
+            <tr>
+                <td>Дата госпитализации в МЧ</td>
+                <td>{{ osugdenyi.dateGospit|date("d.m.Y") }}</td>
+            </tr>
+            <tr>
+                <td>Дата взятия на учет ЛИУ-9</td>
+                <td>{{ osugdenyi.dateVzyatiyaNaUchet|date("d.m.Y") }}</td>
+            </tr>
+            <tr>
+                <td>Дата перевода в ЛИУ-9</td>
+                <td>{{ osugdenyi.datePerevoda|date("d.m.Y") }}</td>
+            </tr>            
+            <tr>
+                <td>МБТ</td>
+                <td>{{ osugdenyi.mbt }}</td>
+            </tr>
+            <tr>
+                <td>Дата заключительной дезинфекции</td>
+                <td>{{ osugdenyi.dateZaklDezin|date("d.m.Y") }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>            
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% if onObjects %}
+
+<div class="col-md-6">
+
+    <div>Договор есть у следующих организаций:</div>
+    
+    {% for organization in onObjects %}
+    
+        <div>{{organization.name_short}}</div>
+        
+    {% endfor %}
+    
+</div>
+
+{% else %}
+
+<div class="col-md-6">
+
+    <div>По запросу учреждений не найдено.</div>
+    
+</div>    
+
+{% endif %}

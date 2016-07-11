@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<div class="row">
+    <h1>Добавление лабораторного исследования для «{{organization_name}}»</h1>
+</div>
+{{ form_start(form) }}
+
+<div class="row">
+    <input type="submit" value="Добавить исследование" class="btn btn-success" style="float:right;"/>
+</div>
+
+<div class="issledovanie row">
+    <div class="col-md-3">
+        {{ form_label(form.nomer, 'Номер протокола') }}
+        {{ form_widget(form.nomer, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_label(form.all_count, 'Всего проб') }}
+        {{ form_widget(form.all_count, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+    <div class="col-md-3">
+        {{ form_label(form.date, 'Дата протокола (дд.мм.гггг)') }}
+        {{ form_widget(form.date, { 'attr': {'class': 'form-control', 'data-validation' : 'date', 'data-validation-optional' : 'true', 'data-validation-format' : 'dd.mm.yyyy'} }) }}
+        {{ form_label(form.ne_sootv, 'Не соответствует') }}
+        {{ form_widget(form.ne_sootv, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+    <div class="col-md-3">
+        {{ form_label(form.issledovanieType, 'Тип') }}
+        {{ form_widget(form.issledovanieType, { 'attr': {'class': 'form-control type_issledovaniya'} }) }}
+
+    </div>
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-3">
+
+    </div>
+</div>
+
+<hr/>
+
+<div class="dobavlenie row">
+    <div class="col-md-12">
+        <div class="pokazatelsIssledovaniya" data-prototype="{{ form_widget(form.pokazatelsIssledovaniy.vars.prototype)|e }}" style="display:none"></div>
+    </div>
+</div>
+
+<hr/>
+
+<div class="row">
+    <input type="submit" value="Добавить исследование" class="btn btn-success" style="float:right;"/>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}
