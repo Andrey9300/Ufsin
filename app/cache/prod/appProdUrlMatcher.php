@@ -28,14 +28,17 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
         $request = $this->request;
 
         if (0 === strpos($pathinfo, '/dogovor')) {
-            // create_dogovor_type
-            if ($pathinfo === '/dogovor/createType') {
-                return array (  '_controller' => 'AppBundle\\Controller\\DogovorController::createType',  '_route' => 'create_dogovor_type',);
-            }
+            if (0 === strpos($pathinfo, '/dogovor/create')) {
+                // create_dogovor_type
+                if ($pathinfo === '/dogovor/createType') {
+                    return array (  '_controller' => 'AppBundle\\Controller\\DogovorController::createType',  '_route' => 'create_dogovor_type',);
+                }
 
-            // show_names_dogovor
-            if (preg_match('#^/dogovor/(?P<id>[^/]++)/showNamesDogovor$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'show_names_dogovor')), array (  '_controller' => 'AppBundle\\Controller\\DogovorController::showNamesDogovor',));
+                // create_dogovor
+                if (0 === strpos($pathinfo, '/dogovor/createDogovor') && preg_match('#^/dogovor/createDogovor/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'create_dogovor')), array (  '_controller' => 'AppBundle\\Controller\\DogovorController::createDogovor',));
+                }
+
             }
 
             // edit_dogovor
@@ -56,14 +59,22 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
 
             }
 
+            if (0 === strpos($pathinfo, '/dogovor/s')) {
+                // show_names_dogovor
+                if (0 === strpos($pathinfo, '/dogovor/showNamesDogovor') && preg_match('#^/dogovor/showNamesDogovor/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'show_names_dogovor')), array (  '_controller' => 'AppBundle\\Controller\\DogovorController::showNamesDogovor',));
+                }
+
+                // sort_dogovor
+                if (0 === strpos($pathinfo, '/dogovor/sortDogovor') && preg_match('#^/dogovor/sortDogovor/(?P<org_id>[^/]++)/(?P<date>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'sort_dogovor')), array (  '_controller' => 'AppBundle\\Controller\\DogovorController::sortDogovor',));
+                }
+
+            }
+
         }
 
         if (0 === strpos($pathinfo, '/fkuz')) {
-            // all_name_filial
-            if ($pathinfo === '/fkuz/allNameFilial') {
-                return array (  '_controller' => 'AppBundle\\Controller\\FkuzController::allNameFilialAction',  '_route' => 'all_name_filial',);
-            }
-
             // create_fkuz
             if ($pathinfo === '/fkuz/createFkuz') {
                 return array (  '_controller' => 'AppBundle\\Controller\\FkuzController::createFkuz',  '_route' => 'create_fkuz',);
@@ -74,45 +85,84 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
                 return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::editFkuz',));
             }
 
+            // delete_fkuz
+            if (0 === strpos($pathinfo, '/fkuz/deleteFkuz') && preg_match('#^/fkuz/deleteFkuz/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::deleteFkuz',));
+            }
+
             // fkuz
             if (preg_match('#^/fkuz/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
                 return $this->mergeDefaults(array_replace($matches, array('_route' => 'fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::showCurrentFilial',));
             }
 
-            if (0 === strpos($pathinfo, '/fkuz/create')) {
-                // create_license
-                if (0 === strpos($pathinfo, '/fkuz/createLicense') && preg_match('#^/fkuz/createLicense/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'create_license')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::createLicense',));
-                }
-
-                // create_san_zakl
-                if (0 === strpos($pathinfo, '/fkuz/createSanZakl') && preg_match('#^/fkuz/createSanZakl/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'create_san_zakl')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::createSanZakl',));
-                }
-
-                // create_dogovor_fkuz
-                if (0 === strpos($pathinfo, '/fkuz/createDogovorFkuz') && preg_match('#^/fkuz/createDogovorFkuz/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'create_dogovor_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::createDogovorFkuz',));
-                }
-
-                // create_issledovanie_fkuz
-                if (0 === strpos($pathinfo, '/fkuz/createIssledovanie') && preg_match('#^/fkuz/createIssledovanie/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'create_issledovanie_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::createIssledovanie',));
-                }
-
+            // all_name_filial
+            if ($pathinfo === '/fkuz/allNameFilial') {
+                return array (  '_controller' => 'AppBundle\\Controller\\FkuzController::allNameFilialAction',  '_route' => 'all_name_filial',);
             }
 
-            if (0 === strpos($pathinfo, '/fkuz/show')) {
-                // show_names_issl_fkuz
-                if (0 === strpos($pathinfo, '/fkuz/showNamesIssledovanie') && preg_match('#^/fkuz/showNamesIssledovanie/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'show_names_issl_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::showNamesIssl',));
-                }
+            // create_license
+            if (0 === strpos($pathinfo, '/fkuz/createLicense') && preg_match('#^/fkuz/createLicense/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'create_license')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::createLicense',));
+            }
 
-                // show_pokazatels_fkuz
-                if (0 === strpos($pathinfo, '/fkuz/showPokazatels') && preg_match('#^/fkuz/showPokazatels/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'show_pokazatels_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::showPokazatels',));
-                }
+            // edit_license
+            if (0 === strpos($pathinfo, '/fkuz/editLicense') && preg_match('#^/fkuz/editLicense/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_license')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::editLicense',));
+            }
 
+            // delete_license
+            if (0 === strpos($pathinfo, '/fkuz/deleteLicense') && preg_match('#^/fkuz/deleteLicense/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_license')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::deleteLicense',));
+            }
+
+            // sort_license_fkuz
+            if (0 === strpos($pathinfo, '/fkuz/sortLicenseFkuz') && preg_match('#^/fkuz/sortLicenseFkuz/(?P<date>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'sort_license_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::sortLicenseFkuz',));
+            }
+
+            // create_san_zakl
+            if (0 === strpos($pathinfo, '/fkuz/createSanZakl') && preg_match('#^/fkuz/createSanZakl/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'create_san_zakl')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::createSanZakl',));
+            }
+
+            // edit_san_zakl
+            if (0 === strpos($pathinfo, '/fkuz/editSanZakl') && preg_match('#^/fkuz/editSanZakl/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_san_zakl')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::editSanZakl',));
+            }
+
+            // delete_san_zakl
+            if (0 === strpos($pathinfo, '/fkuz/deleteSanZakl') && preg_match('#^/fkuz/deleteSanZakl/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_san_zakl')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::deleteSanZakl',));
+            }
+
+            // sort_san_zakl_fkuz
+            if (0 === strpos($pathinfo, '/fkuz/sortSanZaklFkuz') && preg_match('#^/fkuz/sortSanZaklFkuz/(?P<date>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'sort_san_zakl_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::sortSanZaklFkuz',));
+            }
+
+            // create_dogovor_fkuz
+            if (0 === strpos($pathinfo, '/fkuz/createDogovorFkuz') && preg_match('#^/fkuz/createDogovorFkuz/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'create_dogovor_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::createDogovorFkuz',));
+            }
+
+            // edit_dogovor_fkuz
+            if (0 === strpos($pathinfo, '/fkuz/editDogovorFkuz') && preg_match('#^/fkuz/editDogovorFkuz/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_dogovor_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::editDogovorFkuz',));
+            }
+
+            // delete_dogovor_fkuz
+            if (0 === strpos($pathinfo, '/fkuz/deleteDogovorFkuz') && preg_match('#^/fkuz/deleteDogovorFkuz/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_dogovor_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::deleteDogovorFkuz',));
+            }
+
+            // sort_dogovor_fkuz
+            if (0 === strpos($pathinfo, '/fkuz/sortDogovorFkuz') && preg_match('#^/fkuz/sortDogovorFkuz/(?P<date>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'sort_dogovor_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::sortDogovorFkuz',));
+            }
+
+            // create_issledovanie_fkuz
+            if (0 === strpos($pathinfo, '/fkuz/createIssledovanie') && preg_match('#^/fkuz/createIssledovanie/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'create_issledovanie_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::createIssledovanie',));
             }
 
             // edit_issledovanie_fkuz
@@ -125,107 +175,20 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
                 return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_issledovanie_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::deleteIssledovanie',));
             }
 
-            if (0 === strpos($pathinfo, '/fkuz/edit')) {
-                // edit_pokazatel_fkuz
-                if (0 === strpos($pathinfo, '/fkuz/editPokazatel') && preg_match('#^/fkuz/editPokazatel/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_pokazatel_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::editPokazatel',));
-                }
-
-                // edit_license
-                if (0 === strpos($pathinfo, '/fkuz/editLicense') && preg_match('#^/fkuz/editLicense/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_license')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::editLicense',));
-                }
-
-                // edit_san_zakl
-                if (0 === strpos($pathinfo, '/fkuz/editSanZakl') && preg_match('#^/fkuz/editSanZakl/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_san_zakl')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::editSanZakl',));
-                }
-
-                // edit_dogovor_fkuz
-                if (0 === strpos($pathinfo, '/fkuz/editDogovorFkuz') && preg_match('#^/fkuz/editDogovorFkuz/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_dogovor_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::editDogovorFkuz',));
-                }
-
-                // edit_lab_con
-                if (0 === strpos($pathinfo, '/fkuz/editLabCon') && preg_match('#^/fkuz/editLabCon/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_lab_con')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::editLabCon',));
-                }
-
-                // edit_issledovanie_object_fkuz
-                if (0 === strpos($pathinfo, '/fkuz/editIssledovanieObject') && preg_match('#^/fkuz/editIssledovanieObject/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_issledovanie_object_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::editIssledovanieObject',));
-                }
-
+            // edit_pokazatel_fkuz
+            if (0 === strpos($pathinfo, '/fkuz/editPokazatel') && preg_match('#^/fkuz/editPokazatel/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_pokazatel_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::editPokazatel',));
             }
 
-            if (0 === strpos($pathinfo, '/fkuz/delete')) {
-                // delete_license
-                if (0 === strpos($pathinfo, '/fkuz/deleteLicense') && preg_match('#^/fkuz/deleteLicense/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_license')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::deleteLicense',));
+            if (0 === strpos($pathinfo, '/fkuz/show')) {
+                // show_names_issl_fkuz
+                if (0 === strpos($pathinfo, '/fkuz/showNamesIssledovanie') && preg_match('#^/fkuz/showNamesIssledovanie/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'show_names_issl_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::showNamesIssl',));
                 }
 
-                // delete_san_zakl
-                if (0 === strpos($pathinfo, '/fkuz/deleteSanZakl') && preg_match('#^/fkuz/deleteSanZakl/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_san_zakl')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::deleteSanZakl',));
-                }
-
-                // delete_dogovor_fkuz
-                if (0 === strpos($pathinfo, '/fkuz/deleteDogovorFkuz') && preg_match('#^/fkuz/deleteDogovorFkuz/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_dogovor_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::deleteDogovorFkuz',));
-                }
-
-                // delete_lab_con_fkuz
-                if (0 === strpos($pathinfo, '/fkuz/deleteLabCon') && preg_match('#^/fkuz/deleteLabCon/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_lab_con_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::deleteLabCon',));
-                }
-
-                // delete_fkuz
-                if (0 === strpos($pathinfo, '/fkuz/deleteFkuz') && preg_match('#^/fkuz/deleteFkuz/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::deleteFkuz',));
-                }
-
-            }
-
-            if (0 === strpos($pathinfo, '/fkuz/s')) {
-                if (0 === strpos($pathinfo, '/fkuz/show')) {
-                    // show_names_lab_con_fkuz
-                    if (0 === strpos($pathinfo, '/fkuz/showNamesLabConFkuz') && preg_match('#^/fkuz/showNamesLabConFkuz/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'show_names_lab_con_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::showNamesLabConFkuz',));
-                    }
-
-                    // show_issl_lab_fkuz
-                    if (0 === strpos($pathinfo, '/fkuz/showLabIssl') && preg_match('#^/fkuz/showLabIssl/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'show_issl_lab_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::showLabIssl',));
-                    }
-
-                    // show_issledovanie_fkuz
-                    if (0 === strpos($pathinfo, '/fkuz/showIssledovanie') && preg_match('#^/fkuz/showIssledovanie/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'show_issledovanie_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::showIssledovanie',));
-                    }
-
-                }
-
-                if (0 === strpos($pathinfo, '/fkuz/sort')) {
-                    // sort_license_fkuz
-                    if (0 === strpos($pathinfo, '/fkuz/sortLicenseFkuz') && preg_match('#^/fkuz/sortLicenseFkuz/(?P<date>[^/]++)$#s', $pathinfo, $matches)) {
-                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'sort_license_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::sortLicenseFkuz',));
-                    }
-
-                    // sort_san_zakl_fkuz
-                    if (0 === strpos($pathinfo, '/fkuz/sortSanZaklFkuz') && preg_match('#^/fkuz/sortSanZaklFkuz/(?P<date>[^/]++)$#s', $pathinfo, $matches)) {
-                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'sort_san_zakl_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::sortSanZaklFkuz',));
-                    }
-
-                    // sort_proverka_fkuz
-                    if (0 === strpos($pathinfo, '/fkuz/sortProverkaFkuz') && preg_match('#^/fkuz/sortProverkaFkuz/(?P<date>[^/]++)$#s', $pathinfo, $matches)) {
-                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'sort_proverka_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::sortProverkaFkuz',));
-                    }
-
-                    // sort_dogovor_fkuz
-                    if (0 === strpos($pathinfo, '/fkuz/sortDogovorFkuz') && preg_match('#^/fkuz/sortDogovorFkuz/(?P<date>[^/]++)$#s', $pathinfo, $matches)) {
-                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'sort_dogovor_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::sortDogovorFkuz',));
-                    }
-
+                // show_pokazatels_fkuz
+                if (0 === strpos($pathinfo, '/fkuz/showPokazatels') && preg_match('#^/fkuz/showPokazatels/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'show_pokazatels_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::showPokazatels',));
                 }
 
             }
@@ -244,13 +207,21 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
                 return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_proverka_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::editProverkaFkuz',));
             }
 
-            // show_nakazaniya_fkuz
-            if (0 === strpos($pathinfo, '/fkuz/showNakazaniyaFkuz') && preg_match('#^/fkuz/showNakazaniyaFkuz/(?P<id>[^/]++)/?$#s', $pathinfo, $matches)) {
-                if (substr($pathinfo, -1) !== '/') {
-                    return $this->redirect($pathinfo.'/', 'show_nakazaniya_fkuz');
+            if (0 === strpos($pathinfo, '/fkuz/s')) {
+                // sort_proverka_fkuz
+                if (0 === strpos($pathinfo, '/fkuz/sortProverkaFkuz') && preg_match('#^/fkuz/sortProverkaFkuz/(?P<date>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'sort_proverka_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::sortProverkaFkuz',));
                 }
 
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'show_nakazaniya_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::showNakazaniyaFkuz',));
+                // show_nakazaniya_fkuz
+                if (0 === strpos($pathinfo, '/fkuz/showNakazaniyaFkuz') && preg_match('#^/fkuz/showNakazaniyaFkuz/(?P<id>[^/]++)/?$#s', $pathinfo, $matches)) {
+                    if (substr($pathinfo, -1) !== '/') {
+                        return $this->redirect($pathinfo.'/', 'show_nakazaniya_fkuz');
+                    }
+
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'show_nakazaniya_fkuz')), array (  '_controller' => 'AppBundle\\Controller\\FkuzController::showNakazaniyaFkuz',));
+                }
+
             }
 
             // edit_nakazanie_fkuz
@@ -331,6 +302,11 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
 
             }
 
+            // create_issledovanie
+            if (0 === strpos($pathinfo, '/issledovanie/createIssledovanie') && preg_match('#^/issledovanie/createIssledovanie/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'create_issledovanie')), array (  '_controller' => 'AppBundle\\Controller\\IssledovanieController::createIssledovanie',));
+            }
+
         }
 
         // main_index
@@ -355,8 +331,8 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
         if (0 === strpos($pathinfo, '/o')) {
             if (0 === strpos($pathinfo, '/organization')) {
                 // organization_new
-                if ($pathinfo === '/organization/new') {
-                    return array (  '_controller' => 'AppBundle\\Controller\\OrganizationController::newAction',  '_route' => 'organization_new',);
+                if ($pathinfo === '/organization/newOrganization') {
+                    return array (  '_controller' => 'AppBundle\\Controller\\OrganizationController::newOrganization',  '_route' => 'organization_new',);
                 }
 
                 // create_object
@@ -398,95 +374,9 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
                         return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_ruk_zam')), array (  '_controller' => 'AppBundle\\Controller\\OrganizationController::deleteRukZam',));
                     }
 
-                }
-
-                // create_dogovor
-                if (preg_match('#^/organization/(?P<id>[^/]++)/createDogovor$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'create_dogovor')), array (  '_controller' => 'AppBundle\\Controller\\OrganizationController::createDogovor',));
-                }
-
-                // create_proverka
-                if (preg_match('#^/organization/(?P<id>[^/]++)/createProverka$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'create_proverka')), array (  '_controller' => 'AppBundle\\Controller\\OrganizationController::createProverka',));
-                }
-
-                // edit_proverka
-                if (preg_match('#^/organization/(?P<id>[^/]++)/editProverka$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_proverka')), array (  '_controller' => 'AppBundle\\Controller\\OrganizationController::editProverka',));
-                }
-
-                // delete_proverka
-                if (0 === strpos($pathinfo, '/organization/deleteProverka') && preg_match('#^/organization/deleteProverka/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_proverka')), array (  '_controller' => 'AppBundle\\Controller\\OrganizationController::deleteProverka',));
-                }
-
-                // change_otmetka
-                if (0 === strpos($pathinfo, '/organization/changeOtmetka') && preg_match('#^/organization/changeOtmetka/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'change_otmetka')), array (  '_controller' => 'AppBundle\\Controller\\OrganizationController::changeOtmetka',));
-                }
-
-                // delete_narushenie
-                if (0 === strpos($pathinfo, '/organization/deleteNarushenie') && preg_match('#^/organization/deleteNarushenie/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_narushenie')), array (  '_controller' => 'AppBundle\\Controller\\OrganizationController::deleteNarushenie',));
-                }
-
-                // edit_narushenie
-                if (preg_match('#^/organization/(?P<id>[^/]++)/editNarushenie$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_narushenie')), array (  '_controller' => 'AppBundle\\Controller\\OrganizationController::editNarushenie',));
-                }
-
-                // edit_nakazanie
-                if (preg_match('#^/organization/(?P<id>[^/]++)/editNakazanie$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_nakazanie')), array (  '_controller' => 'AppBundle\\Controller\\OrganizationController::editNakazanie',));
-                }
-
-                if (0 === strpos($pathinfo, '/organization/delete')) {
-                    // delete_nakazanie
-                    if (0 === strpos($pathinfo, '/organization/deleteNakazanie') && preg_match('#^/organization/deleteNakazanie/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_nakazanie')), array (  '_controller' => 'AppBundle\\Controller\\OrganizationController::deleteNakazanie',));
-                    }
-
                     // delete_object
                     if (0 === strpos($pathinfo, '/organization/deleteObject') && preg_match('#^/organization/deleteObject/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
                         return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_object')), array (  '_controller' => 'AppBundle\\Controller\\OrganizationController::deleteObject',));
-                    }
-
-                }
-
-                // show_names_proverka
-                if (preg_match('#^/organization/(?P<id>[^/]++)/showNamesProverka$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'show_names_proverka')), array (  '_controller' => 'AppBundle\\Controller\\OrganizationController::showNamesProverka',));
-                }
-
-                // show_narusheniya
-                if (preg_match('#^/organization/(?P<id>[^/]++)/showNarusheniya$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'show_narusheniya')), array (  '_controller' => 'AppBundle\\Controller\\OrganizationController::showNarusheniya',));
-                }
-
-                // show_nakazaniya
-                if (preg_match('#^/organization/(?P<id>[^/]++)/showNakazaniya$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'show_nakazaniya')), array (  '_controller' => 'AppBundle\\Controller\\OrganizationController::showNakazaniya',));
-                }
-
-                // create_issledovanie
-                if (preg_match('#^/organization/(?P<id>[^/]++)/createIssledovanie$#s', $pathinfo, $matches)) {
-                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'create_issledovanie')), array (  '_controller' => 'AppBundle\\Controller\\OrganizationController::createIssledovanie',));
-                }
-
-                if (0 === strpos($pathinfo, '/organization/sort')) {
-                    // sort_dogovor
-                    if (0 === strpos($pathinfo, '/organization/sortDogovor') && preg_match('#^/organization/sortDogovor/(?P<org_id>[^/]++)/(?P<date>[^/]++)$#s', $pathinfo, $matches)) {
-                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'sort_dogovor')), array (  '_controller' => 'AppBundle\\Controller\\OrganizationController::sortDogovor',));
-                    }
-
-                    // sort_proverki
-                    if (0 === strpos($pathinfo, '/organization/sortProverki') && preg_match('#^/organization/sortProverki/(?P<org_id>[^/]++)/(?P<date>[^/]++)$#s', $pathinfo, $matches)) {
-                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'sort_proverki')), array (  '_controller' => 'AppBundle\\Controller\\OrganizationController::sortProverki',));
-                    }
-
-                    // sort_zabolevaniya
-                    if (0 === strpos($pathinfo, '/organization/sortZabolveniya') && preg_match('#^/organization/sortZabolveniya/(?P<org_id>[^/]++)/(?P<date>[^/]++)$#s', $pathinfo, $matches)) {
-                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'sort_zabolevaniya')), array (  '_controller' => 'AppBundle\\Controller\\OrganizationController::sortZabolveniya',));
                     }
 
                 }
@@ -677,16 +567,78 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
 
                 }
 
-                // otchet_organization
-                if ($pathinfo === '/otchet/organization') {
-                    return array (  '_controller' => 'AppBundle\\Controller\\Otchet\\Organization::indexAction',  '_route' => 'otchet_organization',);
+            }
+
+        }
+
+        if (0 === strpos($pathinfo, '/proverka')) {
+            // create_proverka
+            if (0 === strpos($pathinfo, '/proverka/createProverka') && preg_match('#^/proverka/createProverka/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'create_proverka')), array (  '_controller' => 'AppBundle\\Controller\\ProverkaController::createProverka',));
+            }
+
+            if (0 === strpos($pathinfo, '/proverka/s')) {
+                if (0 === strpos($pathinfo, '/proverka/showNa')) {
+                    // show_names_proverka
+                    if (0 === strpos($pathinfo, '/proverka/showNamesProverka') && preg_match('#^/proverka/showNamesProverka/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'show_names_proverka')), array (  '_controller' => 'AppBundle\\Controller\\ProverkaController::showNamesProverka',));
+                    }
+
+                    // show_narusheniya
+                    if (0 === strpos($pathinfo, '/proverka/showNarusheniya') && preg_match('#^/proverka/showNarusheniya/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'show_narusheniya')), array (  '_controller' => 'AppBundle\\Controller\\ProverkaController::showNarusheniya',));
+                    }
+
+                    // show_nakazaniya
+                    if (0 === strpos($pathinfo, '/proverka/showNakazaniya') && preg_match('#^/proverka/showNakazaniya/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'show_nakazaniya')), array (  '_controller' => 'AppBundle\\Controller\\ProverkaController::showNakazaniya',));
+                    }
+
                 }
 
-                // otchet_index
-                if ($pathinfo === '/otchet') {
-                    return array (  '_controller' => 'AppBundle\\Controller\\Otchet\\Otchet::indexAction',  '_route' => 'otchet_index',);
+                // sort_proverki
+                if (0 === strpos($pathinfo, '/proverka/sortProverki') && preg_match('#^/proverka/sortProverki/(?P<org_id>[^/]++)/(?P<date>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'sort_proverki')), array (  '_controller' => 'AppBundle\\Controller\\ProverkaController::sortProverki',));
                 }
 
+            }
+
+            // delete_proverka
+            if (0 === strpos($pathinfo, '/proverka/deleteProverka') && preg_match('#^/proverka/deleteProverka/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_proverka')), array (  '_controller' => 'AppBundle\\Controller\\ProverkaController::deleteProverka',));
+            }
+
+            // change_otmetka
+            if (0 === strpos($pathinfo, '/proverka/changeOtmetka') && preg_match('#^/proverka/changeOtmetka/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'change_otmetka')), array (  '_controller' => 'AppBundle\\Controller\\ProverkaController::changeOtmetka',));
+            }
+
+            // delete_narushenie
+            if (0 === strpos($pathinfo, '/proverka/deleteNarushenie') && preg_match('#^/proverka/deleteNarushenie/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_narushenie')), array (  '_controller' => 'AppBundle\\Controller\\ProverkaController::deleteNarushenie',));
+            }
+
+            if (0 === strpos($pathinfo, '/proverka/editNa')) {
+                // edit_narushenie
+                if (0 === strpos($pathinfo, '/proverka/editNarushenie') && preg_match('#^/proverka/editNarushenie/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_narushenie')), array (  '_controller' => 'AppBundle\\Controller\\ProverkaController::editNarushenie',));
+                }
+
+                // edit_nakazanie
+                if (0 === strpos($pathinfo, '/proverka/editNakazanie') && preg_match('#^/proverka/editNakazanie/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_nakazanie')), array (  '_controller' => 'AppBundle\\Controller\\ProverkaController::editNakazanie',));
+                }
+
+            }
+
+            // delete_nakazanie
+            if (0 === strpos($pathinfo, '/proverka/deleteNakazanie') && preg_match('#^/proverka/deleteNakazanie/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_nakazanie')), array (  '_controller' => 'AppBundle\\Controller\\ProverkaController::deleteNakazanie',));
+            }
+
+            // edit_proverka
+            if (preg_match('#^/proverka/(?P<id>[^/]++)/editProverka$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'edit_proverka')), array (  '_controller' => 'AppBundle\\Controller\\ProverkaController::editProverka',));
             }
 
         }
@@ -810,6 +762,11 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
             // delete_ochag
             if (0 === strpos($pathinfo, '/zabolevaniya/deleteOchag') && preg_match('#^/zabolevaniya/deleteOchag/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
                 return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_ochag')), array (  '_controller' => 'AppBundle\\Controller\\ZabolevaniyaController::deleteOchag',));
+            }
+
+            // sort_zabolevaniya
+            if (0 === strpos($pathinfo, '/zabolevaniya/sortZabolveniya') && preg_match('#^/zabolevaniya/sortZabolveniya/(?P<org_id>[^/]++)/(?P<date>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'sort_zabolevaniya')), array (  '_controller' => 'AppBundle\\Controller\\ZabolevaniyaController::sortZabolveniya',));
             }
 
         }
