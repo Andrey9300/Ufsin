@@ -2,8 +2,8 @@
 
 Установка
 
-git clone https://github.com/Andrey9300/Ufsin.git
-
 composer install
 
 развернуть базу cgsn_example.sql
+
+тестовый логин/пароль: admin/ufsin2016
